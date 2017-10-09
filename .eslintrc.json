@@ -6,6 +6,7 @@
 	"rules": {
 		"linebreak-style": "off",
 		"no-tabs": "off",
-		"indent": ["error", "tab"]
+		"indent": ["error", "tab"],
+		"max-len": ["off", 100]
 	}
 }

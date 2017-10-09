@@ -1,66 +1,24 @@
 <template>
 	<div>
-		<section class="hero is-dark is-fullheight">
+		<section class="hero is-fullheight">
 			<div class="hero-head"><mt-header></mt-header></div>
 			<div class="hero-body">
 				<div class="container">
-					<div class="columns">
-						<div class="column">
-							<div class="card">
-								<header class="card-header">
-									<span class="card-header-title">Runinfo</span>
-								</header>
-								<div class="card-content">
-									<div class="content">
-										<ul>
-											<li>{{data.currentRun.gameInfo.gameName}}
-												({{data.currentRun.gameInfo.releaseYear}})</li>
-											<li>{{data.currentRun.runInfo.category}}</li>
-											<li>{{data.currentRun.runInfo.estimate}}</li>
-											<li>{{data.currentRun.runInfo.platform}}</li>
-										</ul>
-									</div>
-								</div>
-								<header class="card-header">
-									<span class="card-header-title">Playerinfo</span>
-								</header>
-								<div class="card-content">
-									<div class="content">
-										<div v-for="player in data.currentRun.players" :key="player.displayName">
-											<div class="dropdown is-hoverable">
-												<div class="dropdown-trigger">
-													<button class="button" aria-haspopup="true"
-													aria-controls="dropdown-menu4">
-														<span>{{player.displayName}}</span>
-														<span class="icon is-small">
-															<i class="material-icons">arrow_drop_down</i>
-														</span>
-													</button>
-												</div>
-												<div class="dropdown-menu" id="dropdown-menu4" role="menu">
-													<div class="dropdown-content">
-														<div class="dropdown-item">
-															<span>Twitch: {{player.twitchName}}</span>
-														</div>
-														<div class="dropdown-item">
-															<span>Twitter: {{player.twitterName}}</span>
-														</div>
-														<div class="dropdown-item">
-															<span>Youtube: {{player.youtubeName}}</span>
-														</div>
-														<hr class="dropdown-divider">
-														<div class="dropdown-item">
-															<span>{{player.country}}</span>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+					<div class="tile is-ancestor">
+						<div class="tile is-vertical is-parent">
+							<div class="tile is-child box is-primary">
+
+							</div>
+							<div class="tile is-child box">
+
+							</div>
+
+						</div>
+						<div class="tile is-parent">
+							<div class="tile is-child box">
+								<mt-runmanager :data="data"></mt-runmanager>
 							</div>
 						</div>
-						<div class="column"></div>
 					</div>
 				</div>
 			</div>
@@ -70,17 +28,16 @@
 
 <script>
 import Header from './Header.vue';
+import RunManager from './DashboardComponents/RunManager.vue';
 
 export default {
 	components: {
 		'mt-header': Header,
+		'mt-runmanager': RunManager,
 	},
 	props: ['data'],
 };
 </script>
 
 <style module>
-.unify {
-	max-height: 50px;
-}
 </style>
