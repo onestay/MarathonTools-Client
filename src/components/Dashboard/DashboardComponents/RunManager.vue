@@ -20,11 +20,10 @@
 		</header>
 		<div class="card-content">
 			<div class="content">
-				<div v-for="player in data.currentRun.players" :key="player.displayName">
+				<div v-for="player in data.currentRun.players" :key="player.displayName" class="inline">
 					<div class="dropdown is-hoverable">
 						<div class="dropdown-trigger">
-							<button class="button" aria-haspopup="true"
-								aria-controls="dropdown-menu4">
+							<button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
 							<span>{{player.displayName}}</span>
 							<span class="icon is-small">
 							<i class="material-icons">arrow_drop_down</i>
@@ -54,7 +53,6 @@
 		</div>
 		<footer class="card-footer">
 			<a class="button card-footer-item" :disabled="data.prevRun.runID === ''" @click="switchRuns('prev')">Previous ({{data.prevRun.gameInfo.gameName}})</a>
-			<a class="button card-footer-item">Update</a>
 			<a class="button card-footer-item" :disabled="data.nextRun.runID === ''" @click="switchRuns('next')">Next ({{data.nextRun.gameInfo.gameName}})</a>
 
 		</footer>
@@ -66,19 +64,14 @@ export default {
 	props: ['data'],
 	methods: {
 		switchRuns(s) {
-			this.$http.post(`/run/switch?m=${s}`)
-				.then((r) => {
-					console.log(r);
-				})
-				.catch(e => console.log(e));
+			this.$http.post(`/run/switch?m=${s}`);
 		},
 	},
 };
 </script>
 
-<style module>
-.dark-footer {
-	background-color: #363636 !important;
-	color: white !important;
+<style>
+.inline {
+	display: inline-block !important;
 }
 </style>

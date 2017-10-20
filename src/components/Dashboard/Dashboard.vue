@@ -15,7 +15,7 @@
 
 						</div>
 						<div class="tile is-parent">
-							<div class="tile is-child box">
+							<div class="tile is-child">
 								<mt-runmanager :data="data"></mt-runmanager>
 							</div>
 						</div>

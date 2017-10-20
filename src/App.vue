@@ -30,8 +30,21 @@ export default {
 			this.ws = new WebSocket('ws://localhost:3000/ws');
 
 			this.ws.onmessage = ((event) => {
-				this.data = JSON.parse(event.data);
-				this.loading = false;
+				const d = JSON.parse(event.data);
+				if (d.dataType === 'initalData') {
+					this.data.currentRun = d.currentRun;
+					this.data.nextRun = d.nextRun;
+					this.data.prevRun = d.prevRun;
+					this.data.runs = d.runs;
+					this.data.runIndex = d.runIndex;
+					this.loading = false;
+				} else if (d.dataType === 'runUpdate') {
+					this.data.currentRun = d.currentRun;
+					this.data.nextRun = d.nextRun;
+					this.data.prevRun = d.prevRun;
+					this.data.runs = d.runs;
+					this.data.runIndex = d.runIndex;
+				}
 			});
 		},
 	},

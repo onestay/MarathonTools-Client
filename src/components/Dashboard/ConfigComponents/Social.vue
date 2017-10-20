@@ -62,7 +62,7 @@ export default {
 		deleteTwitchInfo() {
 			this.$http.delete('/social/twitch/token')
 				.then(() => {
-					this.$forceUpdate();
+					this.verifyConnections();
 				});
 		},
 	},
@@ -77,9 +77,10 @@ export default {
 				this.$http.post(`/social/twitch/auth?code=${this.$route.query.code}`)
 					.then(() => {
 						this.createAlert('Success', 'Twitch is connected');
+						this.verifyConnections();
 					})
-					.catch((e) => {
-						this.createAlert('Error', `Couldn't connect with Twitch: ${e}`);
+					.catch(() => {
+						this.createAlert('Error', 'Couldn\'t connect with Twitch');
 					});
 			} else if (this.$route.query.error) {
 				this.debug = this.$route.query.error_description;
