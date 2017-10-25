@@ -7,12 +7,11 @@
 					<div class="tile is-ancestor">
 						<div class="tile is-vertical is-parent">
 							<div class="tile is-child box is-primary">
-
+								<mt-timer :data="data"></mt-timer>
 							</div>
 							<div class="tile is-child box">
-
+								<mt-status></mt-status>
 							</div>
-
 						</div>
 						<div class="tile is-parent">
 							<div class="tile is-child">
@@ -29,11 +28,15 @@
 <script>
 import Header from './Header.vue';
 import RunManager from './DashboardComponents/RunManager.vue';
+import Timer from './DashboardComponents/Timer.vue';
+import Status from './DashboardComponents/Status.vue';
 
 export default {
 	components: {
 		'mt-header': Header,
 		'mt-runmanager': RunManager,
+		'mt-timer': Timer,
+		'mt-status': Status,
 	},
 	props: ['data'],
 };

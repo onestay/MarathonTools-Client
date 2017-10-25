@@ -1,6 +1,6 @@
 <template>
 	<div>
-		Runs
+		Status
 	</div>
 </template>
 
