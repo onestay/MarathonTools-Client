@@ -52,8 +52,8 @@
 			</div>
 		</div>
 		<footer class="card-footer">
-			<a class="button card-footer-item" :disabled="data.prevRun.runID === ''" @click="switchRuns('prev')">Previous ({{data.prevRun.gameInfo.gameName}})</a>
-			<a class="button card-footer-item" :disabled="data.nextRun.runID === ''" @click="switchRuns('next')">Next ({{data.nextRun.gameInfo.gameName}})</a>
+			<a class="button card-footer-item" :disabled="data.prevRun.runID === '' || data.timer.state !== 2" @click="switchRuns('prev')">Previous ({{data.prevRun.gameInfo.gameName}})</a>
+			<a class="button card-footer-item" :disabled="data.nextRun.runID === '' || data.timer.state !== 2" @click="switchRuns('next')">Next ({{data.nextRun.gameInfo.gameName}})</a>
 
 		</footer>
 	</div>

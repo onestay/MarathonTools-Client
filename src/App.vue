@@ -45,6 +45,7 @@ export default {
 					this.data.prevRun = d.prevRun;
 					this.data.runs = d.runs;
 					this.data.runIndex = d.runIndex;
+					this.data.timer.state = d.timerState;
 					this.loading = false;
 				} else if (d.dataType === 'runUpdate') {
 					this.data.currentRun = d.currentRun;

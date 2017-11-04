@@ -1,31 +1,48 @@
 <template>
 	<div>
-		<h1 class="title has-text-centered">{{data.timer.formatted}}</h1>
-		<div class="has-text-centered">
-			<div v-if="data.timer.state === 0">
-				<button class="button is-warning is-medium">Pause</button>
-				<button class="button is-danger is-medium">Finish</button>
+		<div>
+			<h1 class="title has-text-centered">{{data.timer.formatted}}</h1>
+			<div class="has-text-centered">
+				<div v-if="data.timer.state === 0">
+					<button class="button is-warning is-medium" @click="timerAction('pause')">Pause</button>
+					<button class="button is-danger is-medium" @click="timerAction('finish')">Finish</button>
+				</div>
+				<div v-else-if="data.timer.state === 1">
+					<button class="button is-danger is-medium" @click="timerAction('reset')">Reset</button>
+					<button class="button is-info is-medium" @click="timerAction('resume')">Resume</button>
+				</div>
+				<div v-else-if="data.timer.state === 2">
+					<button class="button is-success is-medium" @click="timerAction('start')">Start</button>
+				</div>
+				<div v-else-if="data.timer.state === 3">
+					<button class="button is-danger is-medium"@click="timerAction('reset')">Reset</button>
+					<button class="button is-info is-medium" @click="timerAction('resume')">Resume</button>
+				</div>
+				<div v-else>
+					<span>Invalid timer state. This shouldn't happen</span>
+				</div>
 			</div>
-			<div v-else-if="data.timer.state === 1">
-				<button class="button is-danger is-medium">Reset</button>
-				<button class="button is-info is-medium">Resume</button>
-			</div>
-			<div v-else-if="data.timer.state === 2">
-				<button class="button is-success is-medium">Start</button>
-			</div>
-			<div v-else-if="data.timer.state === 3">
-				<button class="button is-danger is-medium">Reset</button>
-			</div>
-			<div v-else>
-				<span>ERROR INVALID TIMER STATE</span>
-			</div>
+		</div>
+		<hr>
+		<div class="columns">
+			<mt-player class="column" v-for="(p, i) in data.currentRun.players" :key="p.displayName" :player="p" :timerState="data.timer.state" :playerIndex="i"></mt-player>
 		</div>
 	</div>
 </template>
 
 <script>
+import TimerPlayer from './TimerPlayer.vue';
+
 export default {
 	props: ['data'],
+	methods: {
+		timerAction(action) {
+			this.$http.post(`/timer/${action}`);
+		},
+	},
+	components: {
+		'mt-player': TimerPlayer,
+	},
 };
 </script>
 
