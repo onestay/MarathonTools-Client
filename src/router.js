@@ -13,6 +13,7 @@ import ConfigSocial from './components/Dashboard/ConfigComponents/Social.vue';
 Vue.use(Router);
 
 export default new Router({
+	mode: 'history',
 	routes: [
 		{
 			path: '/',
@@ -37,7 +38,7 @@ export default new Router({
 				{
 					path: 'social',
 					component: ConfigSocial,
-					alias: ['/dashboard/config/social/twitch', '/dashboard/config/social/twitter'],
+					alias: ['/dashboard/config/social/twitch', 'dashboard/config/social/twitter'],
 				},
 			],
 		},

@@ -3,7 +3,7 @@
 		<div class="tile is-parent">
 			<div class="tile is-child box">
 				<p class="title">Twitch</p>
-				<a :href="twitch.oauthUrl" class="button is-primary" :class="{ 'is-loading': twitch.oauthUrl === '' }" :disabled="this.twitch.isConnected">Connect with Twitch</a>
+				<a :href="twitch.oauthUrl" class="button is-primary" :class="{ 'is-loading': twitch.oauthUrl === '' }" :disabled="twitch.isConnected">Connect with Twitch</a>
 				<button class="button is-danger" v-if="twitch.isConnected" @click="deleteTwitchInfo">Delete Twitch Info</button>
 				<hr>
 				<div class="field">
@@ -18,7 +18,9 @@
 			</div>
 			<div class="tile is-child box">
 				<p class="title">Twitter</p>
-					{{debug}}
+					{{ twitter.oauthurl }}
+					<a :href="twitter.oauthUrl" class="button is-primary" :class="{ 'is-loading': twitter.oauthUrl === '' }" :disabled="twitter.isConnected">Connect with Twitter</a>
+					<button class="button is-danger" v-if="twitter.isConnected" @click="deleteTwitchInfo">Delete Twitch Info</button>
 			</div>
 		</div>
 	</div>
@@ -35,6 +37,10 @@ export default {
 				viewersInDashboard: false,
 				oauthUrl: '',
 			},
+			twitter: {
+				oauthUrl: '',
+				isConnected: false,
+			},
 			debug: 'debug',
 		};
 	},
@@ -43,6 +49,10 @@ export default {
 			this.$http.get('/social/twitch/oauthurl')
 				.then((res) => {
 					this.twitch.oauthUrl = res.body.data;
+				});
+			this.$http.get('/social/twitter/oauthurl')
+				.then((res) => {
+					this.twitter.oauthUrl = res.body.data;
 				});
 		},
 		createAlert(title, message) {
