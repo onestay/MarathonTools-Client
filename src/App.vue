@@ -64,8 +64,15 @@ export default {
 					this.data.runIndex = d.runIndex;
 				} else if (d.dataType === 'timeUpdate') {
 					this.data.timer.time = d.t;
-					this.data.timer.formatted = moment.duration(d.t, 'seconds').format('h:mm:ss', { trim: false });
+					this.data.timer.formatted = moment.duration(d.t, 'seconds').format('hh:mm:ss', { trim: false });
 					this.data.timer.ms = moment.duration(d.t, 'seconds').format('S');
+				} else if (d.dataType === 'error') {
+					this.$toast.open({
+						duration: 5000,
+						message: d.error,
+						position: 'is-bottom',
+						type: 'is-danger',
+					});
 				}
 			});
 		},

@@ -15,7 +15,7 @@
 					<button class="button is-success is-medium" @click="timerAction('start')">Start</button>
 				</div>
 				<div v-else-if="data.timer.state === 3">
-					<button class="button is-danger is-medium"@click="timerAction('reset')">Reset</button>
+					<button class="button is-danger is-medium" @click="timerAction('reset')">Reset</button>
 					<button class="button is-info is-medium" @click="timerAction('resume')">Resume</button>
 				</div>
 				<div v-else>

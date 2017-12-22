@@ -15,6 +15,24 @@
 				<div class="field">
 					<b-switch v-model="twitch.viewersInDashboard" :disabled="twitch.isConnected === false">Show viewers in Dashboard</b-switch>
 				</div>
+				<b-field label="Title Template">
+					<b-input v-model="twitch.template" type="textarea"></b-input>
+				</b-field>
+				<div>
+					<div class="has-text-grey is-size-7">
+						Title Template follows the Go text/template package.
+						The Documentation can be found <a href="https://golang.org/pkg/text/template/#hdr-Actions" target="blank">here</a>.
+						The available pipelines are <code>Game</code>, <code>Runner</code>, <code>Platform</code>, <code>Estimate</code> and <code>Category</code>.
+						For more info see the <code>twitchTitleOptions</code> type and the <code>run</code> type.
+					</div>
+					<br>
+					<div>
+						Example Title Output:
+						"{{ twitch.title }}"
+					</div>
+				</div>
+				<hr>
+				<button class="button is-primary" @click="submitTwitchSettings">Submit Twitch settings</button>
 			</div>
 			<div class="tile is-child box">
 				<p class="title">Twitter</p>
@@ -36,6 +54,8 @@ export default {
 				updateTitle: false,
 				viewersInDashboard: false,
 				oauthUrl: '',
+				template: 'Loading...',
+				title: 'Loading...',
 			},
 			twitter: {
 				oauthUrl: '',
@@ -54,6 +74,19 @@ export default {
 				.then((res) => {
 					this.twitter.oauthUrl = res.body.data;
 				});
+			this.$http.get('/social/twitch/settings')
+				.then((res) => {
+					this.twitch.updateGame = res.body.gameUpdate;
+					this.twitch.updateTitle = res.body.titleUpdate;
+					this.twitch.viewersInDashboard = res.body.viewers;
+					this.twitch.template = res.body.templateString;
+				});
+			this.$http.get('/social/twitch/executetemplate')
+				.then((res) => {
+					if (res.body.ok) {
+						this.twitch.title = res.body.data;
+					}
+				});
 		},
 		createAlert(title, message) {
 			this.$dialog.alert({
@@ -66,6 +99,8 @@ export default {
 				.then((res) => {
 					if (res.body.data === 'true') {
 						this.twitch.isConnected = true;
+					} else {
+						this.twitch.isConnected = false;
 					}
 				});
 		},
@@ -73,6 +108,22 @@ export default {
 			this.$http.delete('/social/twitch/token')
 				.then(() => {
 					this.verifyConnections();
+				});
+		},
+		submitTwitchSettings() {
+			this.$http.put('/social/twitch/settings', {
+				titleUpdate: this.twitch.updateTitle,
+				gameUpdate: this.twitch.updateGame,
+				viewers: this.twitch.viewersInDashboard,
+				templateString: this.twitch.template,
+			})
+				.then(() => {
+					this.$http.get('/social/twitch/executetemplate')
+						.then((res) => {
+							if (res.body.ok) {
+								this.twitch.title = res.body.data;
+							}
+						});
 				});
 		},
 	},
@@ -86,8 +137,7 @@ export default {
 			if (this.$route.query.code) {
 				this.$http.post(`/social/twitch/auth?code=${this.$route.query.code}`)
 					.then(() => {
-						this.createAlert('Success', 'Twitch is connected');
-						this.verifyConnections();
+						this.$router.push('/dashboard/config/social');
 					})
 					.catch(() => {
 						this.createAlert('Error', 'Couldn\'t connect with Twitch');
