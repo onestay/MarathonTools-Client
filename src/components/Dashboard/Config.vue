@@ -16,7 +16,7 @@
 						</aside>
 					</div>
 					<div class="column">
-						<router-view></router-view>
+						<router-view :data="data"></router-view>
 					</div>
 				</div>
 			</div>
@@ -32,6 +32,7 @@ export default {
 	components: {
 		'mt-header': Header,
 	},
+	props: ['data'],
 };
 </script>
 

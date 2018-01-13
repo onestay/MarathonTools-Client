@@ -10,7 +10,7 @@
 								<mt-timer :data="data"></mt-timer>
 							</div>
 							<div class="tile is-child box">
-								<mt-status></mt-status>
+								<mt-status :data="data"></mt-status>
 							</div>
 						</div>
 						<div class="tile is-parent">

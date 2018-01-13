@@ -30,6 +30,7 @@ export default {
 					formatted: '0:00',
 					ms: 0,
 				},
+				twitchViewers: -1,
 			},
 		};
 	},
@@ -73,6 +74,8 @@ export default {
 						position: 'is-bottom',
 						type: 'is-danger',
 					});
+				} else if (d.dataType === 'twitchViewerUpdate') {
+					this.data.twitchViewers = d.viewers;
 				}
 			});
 		},

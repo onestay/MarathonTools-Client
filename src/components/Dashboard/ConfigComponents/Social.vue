@@ -118,6 +118,11 @@ export default {
 				templateString: this.twitch.template,
 			})
 				.then(() => {
+					this.$toast.open({
+						message: 'Settings saved',
+						position: 'is-bottom',
+						type: 'is-success',
+					});
 					this.$http.get('/social/twitch/executetemplate')
 						.then((res) => {
 							if (res.body.ok) {
