@@ -68,9 +68,11 @@
                 </div>
             </div>
         </div>
-		<b-modal :active.sync="editModalOpen" :width="640" scroll="keep">
-			<div class="card">
+		<div style="width: auto"></div>
+		<b-modal :active.sync="editModalOpen">
+			<div class="card test">
 				<div class="card-content">
+					<p class="has-text-weight-bold is-size-4 input-group-header">Gameinfo</p>
 					<b-field grouped>
 						<b-field label="Gamename">
 							<b-input v-model="editModalRun.gameInfo.gameName"></b-input>
@@ -79,6 +81,41 @@
 							<b-input v-model="editModalRun.gameInfo.releaseYear"></b-input>
 						</b-field>
 					</b-field>
+					<hr>
+					<p class="has-text-weight-bold is-size-4 input-group-header">Runinfo</p>
+					<b-field grouped>
+						<b-field label="Category">
+							<b-input v-model="editModalRun.runInfo.category"></b-input>
+						</b-field>
+						<b-field label="Estimate">
+							<b-input v-model="editModalRun.runInfo.estimate"></b-input>
+						</b-field>
+						<b-field label="Platform">
+							<b-input v-model="editModalRun.runInfo.platform"></b-input>
+						</b-field>
+					</b-field>
+					<hr>
+					<p class="has-text-weight-bold is-size-4 input-group-header">Playerinfo</p>
+					<div v-for="(player, i) in editModalRun.players" :key="player.displayName">
+						<p class="has-text-weight-bold is-size-5 input-group-header">Player {{i+1}}</p>
+						<b-field grouped>
+							<b-field label="Display name">
+								<b-input v-model="player.displayName"></b-input>
+							</b-field>
+							<b-field label="Twitter name">
+								<b-input v-model="player.twitterName"></b-input>
+							</b-field>
+							<b-field label="Twitch name">
+								<b-input v-model="player.twitchName"></b-input>
+							</b-field>
+							<br>
+							<b-field label="Countrycode">
+								<b-input v-model="player.country"></b-input>
+							</b-field>
+						</b-field>
+					</div>
+					<hr>
+					<b-field></b-field>
 				</div>
 			</div>
 		</b-modal>
@@ -145,5 +182,11 @@ export default {
 }
 .inline {
 	display: inline-block !important;
+}
+.input-group-header {
+	margin-bottom: 5px;
+}
+.test {
+	width: auto !important;
 }
 </style>
