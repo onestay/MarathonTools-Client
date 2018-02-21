@@ -9,7 +9,8 @@
 					@click="timerPlayerDone()"
 					class="button is-success is-marginless is-paddingless"
 					:disabled="timerState !== 0">
-					<i class="material-icons">done</i> Finish
+					<b-icon icon="check"/>
+					<span>Done</span>
 				</button>
 			</span>
 			<span

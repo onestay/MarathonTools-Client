@@ -5,13 +5,23 @@
 		</header>
 		<div class="card-content">
 			<div class="content">
-				<ul>
-					<li>{{ data.currentRun.gameInfo.gameName }}
-						({{ data.currentRun.gameInfo.releaseYear }})
+				<ul class="bullet">
+					<li>
+						<b-icon icon="gamepad-variant" />
+						<span>{{ data.currentRun.gameInfo.gameName }} ({{ data.currentRun.gameInfo.releaseYear }})</span>
 					</li>
-					<li>{{ data.currentRun.runInfo.category }}</li>
-					<li>{{ data.currentRun.runInfo.estimate }}</li>
-					<li>{{ data.currentRun.runInfo.platform }}</li>
+					<li>
+						<b-icon icon="tag"/>
+						<span>{{ data.currentRun.runInfo.category }}</span>
+					</li>
+					<li>
+						<b-icon icon="timer-sand-full" />
+						<span>{{ data.currentRun.runInfo.estimate }}</span>
+					</li>
+					<li>
+						<b-icon icon="laptop-windows" />
+						<span>{{ data.currentRun.runInfo.platform }}</span>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -31,9 +41,7 @@
 								aria-haspopup="true"
 								aria-controls="dropdown-menu4">
 								<span>{{ player.displayName }}</span>
-								<span class="icon is-small">
-									<i class="material-icons">arrow_drop_down</i>
-								</span>
+								<b-icon icon="chevron-down"/>
 							</button>
 						</div>
 						<div
@@ -64,11 +72,17 @@
 			<a
 				class="button card-footer-item"
 				:disabled="data.prevRun.runID === '' || data.timer.state !== 2"
-				@click="switchRuns('prev')">Previous ({{ data.prevRun.gameInfo.gameName }})</a>
+				@click="switchRuns('prev')">
+				<b-icon icon="chevron-left" />
+				<span>Previous ({{ data.prevRun.gameInfo.gameName }})</span>
+			</a>
 			<a
 				class="button card-footer-item"
 				:disabled="data.nextRun.runID === '' || data.timer.state !== 2"
-				@click="switchRuns('next')">Next ({{ data.nextRun.gameInfo.gameName }})</a>
+				@click="switchRuns('next')">
+				<b-icon icon="chevron-right" />
+				<span>Next ({{ data.nextRun.gameInfo.gameName }})</span>
+			</a>
 		</footer>
 	</div>
 </template>
@@ -94,5 +108,8 @@ export default {
 <style>
 .inline {
 	display: inline-block !important;
+}
+.bullet {
+	list-style-type: none !important;
 }
 </style>
