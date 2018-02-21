@@ -1,21 +1,21 @@
 <template>
 	<div>
 		<section class="hero is-fullheight">
-			<div class="hero-head"><mt-header></mt-header></div>
+			<div class="hero-head"><mt-header /></div>
 			<div class="hero-body">
 				<div class="container">
 					<div class="tile is-ancestor">
 						<div class="tile is-vertical is-parent">
 							<div class="tile is-child box is-primary">
-								<mt-timer :data="data"></mt-timer>
+								<mt-timer :data="data" />
 							</div>
 							<div class="tile is-child box">
-								<mt-status :data="data"></mt-status>
+								<mt-status :data="data" />
 							</div>
 						</div>
 						<div class="tile is-parent">
 							<div class="tile is-child">
-								<mt-runmanager :data="data"></mt-runmanager>
+								<mt-runmanager :data="data" />
 							</div>
 						</div>
 					</div>
@@ -38,9 +38,13 @@ export default {
 		'mt-timer': Timer,
 		'mt-status': Status,
 	},
-	props: ['data'],
+	props: {
+		data: {
+			type: Object,
+			default() {
+				return {};
+			},
+		},
+	},
 };
 </script>
-
-<style module>
-</style>

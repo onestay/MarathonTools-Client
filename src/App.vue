@@ -1,7 +1,12 @@
 <template>
 	<div>
-		<b-loading :active="loading" :canCancel="false" v-if="loading"></b-loading>
-		<router-view v-else  :data="data"></router-view>
+		<b-loading
+			:active="loading"
+			:can-cancel="false"
+			v-if="loading" />
+		<router-view
+			v-else
+			:data="data" />
 	</div>
 </template>
 
@@ -31,12 +36,22 @@ export default {
 					ms: 0,
 				},
 				twitchViewers: -1,
+				donationInfo: {
+					amountOld: -1,
+					amountNew: 0,
+					latestDifference: 0,
+				},
 			},
 		};
+	},
+	created() {
+		this.createWSConn();
 	},
 	methods: {
 		createWSConn() {
 			this.ws = new WebSocket('ws://localhost:3000/ws');
+
+			this.$http.get('/donations/total/update/start');
 
 			this.ws.onmessage = ((event) => {
 				const d = JSON.parse(event.data);
@@ -76,12 +91,13 @@ export default {
 					});
 				} else if (d.dataType === 'twitchViewerUpdate') {
 					this.data.twitchViewers = d.viewers;
+				} else if (d.dataType === 'donationUpdate') {
+					this.data.donationInfo.amountOld = d.old;
+					this.data.donationInfo.amountNew = d.new;
+					this.data.donationInfo.latestDifference = d.difference;
 				}
 			});
 		},
-	},
-	created() {
-		this.createWSConn();
 	},
 };
 </script>

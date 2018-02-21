@@ -1,15 +1,30 @@
 <template>
 	<div>
-		<nav class="navbar" role="navigation">
+		<nav
+			class="navbar"
+			role="navigation">
 			<div class="navbar-brand container">
-				<div class="navbar-item">{{fullName}}</div>
-				<router-link class="navbar-item" to="/dashboard" active-class="is-active" exact>Dashboard</router-link>
+				<div class="navbar-item">{{ fullName }}</div>
+				<router-link
+					class="navbar-item"
+					to="/dashboard"
+					active-class="is-active"
+					exact>Dashboard</router-link>
 				<div class="navbar-item has-dropdown is-hoverable">
-					<router-link class="navbar-link" to="/dashboard/config" active-class="is-active">Config</router-link>
+					<router-link
+						class="navbar-link"
+						to="/dashboard/config"
+						active-class="is-active">Config</router-link>
 					<div class="navbar-dropdown">
-						<router-link class="navbar-item" to="/dashboard/config/general">General</router-link>
-						<router-link class="navbar-item" to="/dashboard/config/runs">Runs</router-link>
-						<router-link class="navbar-item" to="/dashboard/config/social">Social</router-link>
+						<router-link
+							class="navbar-item"
+							to="/dashboard/config/general">General</router-link>
+						<router-link
+							class="navbar-item"
+							to="/dashboard/config/runs">Runs</router-link>
+						<router-link
+							class="navbar-item"
+							to="/dashboard/config/social">Social</router-link>
 					</div>
 				</div>
 			</div>
@@ -28,4 +43,3 @@ export default {
 	},
 };
 </script>
-
