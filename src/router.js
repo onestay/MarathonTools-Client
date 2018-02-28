@@ -11,6 +11,14 @@ import ConfigSocial from './components/Dashboard/ConfigComponents/Social.vue';
 
 import HostDB from './components/HostDashboard/HostDashboard.vue';
 
+import Live from './components/Live/Live.vue';
+
+import LdonationCount from './components/Live/Donations/DonationCount.vue';
+
+import Lruns from './components/Live/Runs/Runs.vue';
+
+import Ltime from './components/Live/Timer/Time.vue';
+import LplayerTime from './components/Live/Timer/PlayerTimes.vue';
 
 Vue.use(Router);
 
@@ -46,6 +54,28 @@ export default new Router({
 		{
 			path: '/host',
 			component: HostDB,
+		},
+		{
+			path: '/live',
+			component: Live,
+			children: [
+				{
+					path: 'runs/:type/:part',
+					component: Lruns,
+				},
+				{
+					path: 'donations',
+					component: LdonationCount,
+				},
+				{
+					path: 'time',
+					component: Ltime,
+				},
+				{
+					path: 'time/player/:id',
+					component: LplayerTime,
+				},
+			],
 		},
 	],
 });

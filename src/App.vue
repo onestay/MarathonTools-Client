@@ -34,6 +34,9 @@ export default {
 					time: 1.0,
 					formatted: '0:00',
 					ms: 0,
+					s: 0,
+					m: 0,
+					h: 0,
 				},
 				twitchViewers: -1,
 				donationInfo: {
@@ -50,8 +53,6 @@ export default {
 	methods: {
 		createWSConn() {
 			this.ws = new WebSocket('ws://localhost:3000/ws');
-
-			this.$http.get('/donations/total/update/start');
 
 			this.ws.onmessage = ((event) => {
 				const d = JSON.parse(event.data);
@@ -80,8 +81,11 @@ export default {
 					this.data.runIndex = d.runIndex;
 				} else if (d.dataType === 'timeUpdate') {
 					this.data.timer.time = d.t;
-					this.data.timer.formatted = moment.duration(d.t, 'seconds').format('hh:mm:ss', { trim: false });
-					this.data.timer.ms = moment.duration(d.t, 'seconds').format('S');
+					this.data.timer.formatted = moment.duration(d.t, 'seconds').format('h:mm:ss', { trim: 'large' });
+					this.data.timer.ms = moment.duration(d.t, 'seconds').format('SS');
+					this.data.timer.s = moment.duration(d.t, 'seconds').format('ss');
+					this.data.timer.m = moment.duration(d.t, 'seconds').format('mm');
+					this.data.timer.h = moment.duration(d.t, 'seconds').format('hh');
 				} else if (d.dataType === 'error') {
 					this.$toast.open({
 						duration: 5000,
@@ -96,6 +100,30 @@ export default {
 					this.data.donationInfo.amountNew = d.new;
 					this.data.donationInfo.latestDifference = d.difference;
 				}
+			});
+
+			this.ws.onopen = (() => {
+				this.$http.get('/donations/total/update/start')
+					.catch(() => console.log('donations updates already running'));
+
+				this.$toast.open({
+					type: 'is-light',
+					message: 'Websocket connection created.',
+					position: 'is-top-left',
+				});
+			});
+
+			this.ws.onerror = (() => {
+				this.$toast.open({
+					type: 'is-danger',
+					message: 'Couldn\'t connect to Websocket or the connection was unexpectedly closed. Check if the backend is running. Reconnecting in 10 seconds',
+					position: 'is-bottom',
+					duration: 5000,
+				});
+
+				setTimeout(() => {
+					this.createWSConn();
+				}, 10000);
 			});
 		},
 	},
