@@ -29,7 +29,16 @@ body {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 50px;
 }
-div[state="stop"] {
-	color: red;
+div[state="0"] {
+	color: white;
+}
+div[state="1"] {
+	color: yellow;
+}
+div[state="2"] {
+	color: grey;
+}
+div[state="3"] {
+	color: green;
 }
 </style>

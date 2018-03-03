@@ -32,11 +32,8 @@ export default {
 				timer: {
 					state: 0,
 					time: 1.0,
-					formatted: '0:00',
+					formatted: '00:00',
 					ms: 0,
-					s: 0,
-					m: 0,
-					h: 0,
 				},
 				twitchViewers: -1,
 				donationInfo: {
@@ -81,11 +78,12 @@ export default {
 					this.data.runIndex = d.runIndex;
 				} else if (d.dataType === 'timeUpdate') {
 					this.data.timer.time = d.t;
-					this.data.timer.formatted = moment.duration(d.t, 'seconds').format('h:mm:ss', { trim: 'large' });
-					this.data.timer.ms = moment.duration(d.t, 'seconds').format('SS');
-					this.data.timer.s = moment.duration(d.t, 'seconds').format('ss');
-					this.data.timer.m = moment.duration(d.t, 'seconds').format('mm');
-					this.data.timer.h = moment.duration(d.t, 'seconds').format('hh');
+					if (d.t >= 3600) {
+						this.data.timer.formatted = moment.duration(d.t, 'seconds').format('h:mm:ss', { trim: 'false' });
+					} else {
+						this.data.timer.formatted = moment.duration(d.t, 'seconds').format('mm:ss', { trim: 'false' });
+					}
+					this.data.timer.ms = moment.duration(d.t, 'seconds').format('S');
 				} else if (d.dataType === 'error') {
 					this.$toast.open({
 						duration: 5000,
