@@ -210,6 +210,10 @@ export default {
 						this.twitch.title = res.body.data;
 					}
 				});
+			this.$http.get('/social/twitter/settings')
+				.then((res) => {
+					this.twitter.sendTweets = res.body.sendUpdates;
+				});
 			this.getTemplates();
 		},
 		createAlert(title, message) {
