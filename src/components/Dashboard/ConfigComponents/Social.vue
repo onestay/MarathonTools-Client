@@ -159,7 +159,7 @@ export default {
 
 		if (lastPart === 'twitch') {
 			if (this.$route.query.code) {
-				this.$http.post(`/social/twitch/auth?code=${this.$route.query.code}`)
+				this.$http.post(`social/twitch/auth?code=${this.$route.query.code}`)
 					.then(() => {
 						this.verifyConnections();
 						this.$router.push('/dashboard/config/social');
@@ -180,7 +180,7 @@ export default {
 		if (uri[3].search('oauth_token') === 1) {
 			// get the query stuff
 			const query = uri[3].slice(1, -1);
-			this.$http.post(`/social/twitter/auth?${query}`)
+			this.$http.post(`social/twitter/auth?${query}`)
 				.then(() => {
 					this.verifyConnections();
 					window.location.href = '/#/dashboard/config/social';
@@ -189,28 +189,28 @@ export default {
 	},
 	methods: {
 		fetchData() {
-			this.$http.get('/social/twitch/oauthurl')
+			this.$http.get('social/twitch/oauthurl')
 				.then((res) => {
 					this.twitch.oauthUrl = res.body.data;
 				});
-			this.$http.get('/social/twitter/oauthurl')
+			this.$http.get('social/twitter/oauthurl')
 				.then((res) => {
 					this.twitter.oauthUrl = res.body.data;
 				});
-			this.$http.get('/social/twitch/settings')
+			this.$http.get('social/twitch/settings')
 				.then((res) => {
 					this.twitch.updateGame = res.body.gameUpdate;
 					this.twitch.updateTitle = res.body.titleUpdate;
 					this.twitch.viewersInDashboard = res.body.viewers;
 					this.twitch.template = res.body.templateString;
 				});
-			this.$http.get('/social/twitch/executetemplate')
+			this.$http.get('social/twitch/executetemplate')
 				.then((res) => {
 					if (res.body.ok) {
 						this.twitch.title = res.body.data;
 					}
 				});
-			this.$http.get('/social/twitter/settings')
+			this.$http.get('social/twitter/settings')
 				.then((res) => {
 					this.twitter.sendTweets = res.body.sendUpdates;
 				});
@@ -223,7 +223,7 @@ export default {
 			});
 		},
 		verifyConnections() {
-			this.$http.get('/social/twitch/verify')
+			this.$http.get('social/twitch/verify')
 				.then((res) => {
 					if (res.body.data === 'true') {
 						this.twitch.isConnected = true;
@@ -231,7 +231,7 @@ export default {
 						this.twitch.isConnected = false;
 					}
 				});
-			this.$http.get('/social/twitter/verify')
+			this.$http.get('social/twitter/verify')
 				.then((res) => {
 					if (res.body.data === 'true') {
 						this.twitter.isConnected = true;
@@ -241,13 +241,13 @@ export default {
 				});
 		},
 		deleteTwitchInfo() {
-			this.$http.delete('/social/twitch/token')
+			this.$http.delete('social/twitch/token')
 				.then(() => {
 					this.verifyConnections();
 				});
 		},
 		submitTwitchSettings() {
-			this.$http.put('/social/twitch/settings', {
+			this.$http.put('social/twitch/settings', {
 				titleUpdate: this.twitch.updateTitle,
 				gameUpdate: this.twitch.updateGame,
 				viewers: this.twitch.viewersInDashboard,
@@ -259,7 +259,7 @@ export default {
 						position: 'is-bottom',
 						type: 'is-success',
 					});
-					this.$http.get('/social/twitch/executetemplate')
+					this.$http.get('social/twitch/executetemplate')
 						.then((res) => {
 							if (res.body.ok) {
 								this.twitch.title = res.body.data;
@@ -268,13 +268,13 @@ export default {
 				});
 		},
 		deleteTwitterInfo() {
-			this.$http.delete('/social/twitter/token')
+			this.$http.delete('social/twitter/token')
 				.then(() => {
 					this.verifyConnections();
 				});
 		},
 		submitTwitterSettings(v) {
-			this.$http.put('/social/twitter/settings', { sendTweets: v })
+			this.$http.put('social/twitter/settings', { sendTweets: v })
 				.then((r) => {
 					if (!r.ok) {
 						this.$toast.open({
@@ -292,7 +292,7 @@ export default {
 				});
 		},
 		submitTemplate() {
-			this.$http.post('/social/twitter/template', this.twitter.tweetTemplate)
+			this.$http.post('social/twitter/template', this.twitter.tweetTemplate)
 				.then((r) => {
 					if (!r.ok) {
 						this.$toast.open({
@@ -321,13 +321,13 @@ export default {
 				});
 		},
 		getTemplates() {
-			this.$http.get('/social/twitter/template')
+			this.$http.get('social/twitter/template')
 				.then((r) => {
 					this.twitter.templates = r.body;
 				});
 		},
 		deleteTemplate(i) {
-			this.$http.delete(`/social/twitter/template/${i}`)
+			this.$http.delete(`social/twitter/template/${i}`)
 				.then((r) => {
 					if (!r.ok) {
 						this.$toast.open({

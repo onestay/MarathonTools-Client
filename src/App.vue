@@ -50,7 +50,7 @@ export default {
 	},
 	methods: {
 		createWSConn() {
-			this.ws = new WebSocket('ws://localhost:3000/ws');
+			this.ws = new WebSocket(`ws://${window.location.hostname}:3000/ws`);
 
 			this.ws.onmessage = ((event) => {
 				const d = JSON.parse(event.data);
@@ -102,7 +102,7 @@ export default {
 			});
 
 			this.ws.onopen = (() => {
-				this.$http.get('/donations/total/update/start')
+				this.$http.get('donations/total/update/start')
 					.catch(() => console.log('donations updates already running'));
 
 				this.$toast.open({

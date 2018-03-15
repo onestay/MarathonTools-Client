@@ -67,7 +67,7 @@ export default {
 	},
 	methods: {
 		timerAction(action) {
-			this.$http.post(`/timer/${action}`);
+			this.$http.post(`timer/${action}`);
 		},
 	},
 };

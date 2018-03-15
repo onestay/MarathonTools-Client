@@ -57,7 +57,7 @@ export default {
 	},
 	methods: {
 		fetchData() {
-			this.$http.get('/social/twitch/verify')
+			this.$http.get('social/twitch/verify')
 				.then((res) => {
 					if (res.body.data === 'true') {
 						this.twitchIsConnected = true;

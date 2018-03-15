@@ -6,6 +6,7 @@ import router from './router';
 
 Vue.use(VueResource);
 
+Vue.http.options.root = `http://${window.location.hostname}:3000`;
 // eslint-disable-next-line
 new Vue({
 	el: '#app',

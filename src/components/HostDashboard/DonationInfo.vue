@@ -44,7 +44,7 @@ export default {
 	},
 	methods: {
 		fetchData() {
-			this.$http.get('/donations/all')
+			this.$http.get('donations/all')
 				.then((res) => {
 					this.donations = res.body.donations.slice(0, 3);
 				});

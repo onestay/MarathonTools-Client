@@ -252,7 +252,7 @@ export default {
 				type: 'is-danger',
 				hasIcon: false,
 				onConfirm: () => {
-					this.$http.delete(`/run/delete/${this.selected.runData.runID}`)
+					this.$http.delete(`run/delete/${this.selected.runData.runID}`)
 						.then(() => {
 							this.$toast.open('Run succesfully deleted!');
 						});
@@ -275,7 +275,7 @@ export default {
 			this.isLoading = false;
 		},
 		saveEdit(run) {
-			this.$http.patch(`/run/update/${run.runID}`, run)
+			this.$http.patch(`run/update/${run.runID}`, run)
 				.then((r) => {
 					if (!r.ok) {
 						this.$toast.open({
@@ -303,7 +303,7 @@ export default {
 		saveRun() {
 			this.modalActive = false;
 			this.addRun.gameInfo.releaseYear = parseInt(this.addRun.gameInfo.releaseYear, 10);
-			this.$http.post('/run/add/single', this.addRun)
+			this.$http.post('run/add/single', this.addRun)
 				.then((r) => {
 					if (!r.ok) {
 						this.$toast.open({
@@ -313,7 +313,7 @@ export default {
 						});
 						return;
 					} else if (this.addRun.after) {
-						this.$http.post(`/run/move/${r.body.data}/${this.addRun.after}`);
+						this.$http.post(`run/move/${r.body.data}/${this.addRun.after}`);
 					}
 					this.$toast.open({
 						message: 'Added run!',

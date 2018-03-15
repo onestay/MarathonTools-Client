@@ -48,7 +48,7 @@ export default {
 	},
 	methods: {
 		timerPlayerDone() {
-			this.$http.post(`/timer/player/finish/${this.playerIndex}`);
+			this.$http.post(`timer/player/finish/${this.playerIndex}`);
 		},
 	},
 };

@@ -99,7 +99,7 @@ export default {
 	},
 	methods: {
 		switchRuns(s) {
-			this.$http.post(`/run/switch?m=${s}`);
+			this.$http.post(`run/switch?m=${s}`);
 		},
 	},
 };
