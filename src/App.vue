@@ -15,6 +15,7 @@ import Vue from 'vue';
 import Buefy from 'buefy';
 import moment from 'moment';
 import 'moment-duration-format';
+import { setTimeout } from 'timers';
 
 Vue.use(Buefy);
 
@@ -118,10 +119,10 @@ export default {
 					position: 'is-bottom',
 					duration: 5000,
 				});
+			});
 
-				setTimeout(() => {
-					this.createWSConn();
-				}, 10000);
+			this.ws.onclose = (() => {
+				setTimeout(this.createWSConn, 5000);
 			});
 		},
 	},
