@@ -265,7 +265,7 @@ export default {
 				const e = this.data.runs[i];
 				this.runData.push({
 					runData: e,
-					game: `${e.gameInfo.gameName} (${e.gameInfo.releaseYear})`,
+					game: e.gameInfo.releaseYear ? `${e.gameInfo.gameName} (${e.gameInfo.releaseYear})` : e.gameInfo.gameName,
 					estimate: e.runInfo.estimate,
 					player: e.players.map(p => p.displayName).join(', '),
 					platform: e.runInfo.platform,

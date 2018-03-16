@@ -8,7 +8,7 @@
 				<ul class="bullet">
 					<li>
 						<b-icon icon="gamepad-variant" />
-						<span>{{ data.currentRun.gameInfo.gameName }} ({{ data.currentRun.gameInfo.releaseYear }})</span>
+						<span>{{ data.currentRun.gameInfo.releaseYear ? `${data.currentRun.gameInfo.gameName} (${data.currentRun.gameInfo.releaseYear})` : data.currentRun.gameInfo.gameName }}</span>
 					</li>
 					<li>
 						<b-icon icon="tag"/>
