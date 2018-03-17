@@ -1,5 +1,5 @@
 <template>
-	<div v-html="output" />
+	<div>{{ output }}</div>
 </template>
 
 <script>
@@ -15,11 +15,6 @@ export default {
 			},
 		},
 	},
-	data() {
-		return {
-			pos: 0,
-		};
-	},
 	computed: {
 		output() {
 			if (this.data.currentRun.players.length === 1) {
@@ -29,33 +24,15 @@ export default {
 			}
 			const p = this.data.currentRun.players[this.$route.params.id];
 
-			// TODO: eventually move the position stuff to backend since this is super bad code
+			// TODO: display position of player
 			if (p.timer.finished) {
-				if (this.pos !== 0) {
-					return `<div class="time">${p.timer.time >= 3600 ? moment.duration(p.timer.time, 'seconds').format('h:mm:ss', { trim: 'false' })
-						: moment.duration(p.timer.time, 'seconds').format('mm:ss', { trim: 'false' })}</div><br/><div class="position">${this.pos}. Place</div>`;
-				}
-
-				let d = 0;
-				this.data.currentRun.players.forEach((e) => {
-					if (e.timer.finished) {
-						d++;
-					}
-				});
-				this.pos = d; // eslint-disable-line
-				return `<div class="time">${p.timer.time >= 3600 ? moment.duration(p.timer.time, 'seconds').format('h:mm:ss', { trim: 'false' })
-					: moment.duration(p.timer.time, 'seconds').format('mm:ss', { trim: 'false' })}</div><br/><div class="position">${this.pos}. Place</div>`;
+				return p.timer.time >= 3600 ? moment.duration(p.timer.time, 'seconds').format('h:mm:ss', { trim: 'false' })
+					: moment.duration(p.timer.time, 'seconds').format('mm:ss', { trim: 'false' });
 			}
 			return '';
 		},
 	},
 };
-
-// if (d.t >= 3600) {
-// 						this.data.timer.formatted = moment.duration(d.t, 'seconds').format('h:mm:ss', { trim: 'false' });
-// 					} else {
-// 						this.data.timer.formatted = moment.duration(d.t, 'seconds').format('mm:ss', { trim: 'false' });
-// 					}
 </script>
 
 <style scoped>
