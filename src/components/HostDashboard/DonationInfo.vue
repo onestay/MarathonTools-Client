@@ -5,12 +5,14 @@
 		<div>
 			<p>Latest three donations:</p>
 			<ul
+				style="list-style-type: none;"
 				li
 				v-for="donation in donations"
 				:key="donation.name">
-				<li>{{ donation.user }} </li>
-				<li>{{ donation.amount }}€</li>
-				<li>{{ donation.message }}</li>
+				<li> <b-icon icon="account"/> <span>{{ donation.user }}</span> </li>
+				<li> <b-icon icon="currency-usd"/> {{ donation.amount }}€</li>
+				<li> <b-icon icon="message-text"/> {{ donation.message }}</li>
+				<hr>
 			</ul>
 		</div>
 	</div>
@@ -36,11 +38,12 @@ export default {
 			if (this.data.donationInfo.amountOld === -1) {
 				return 'Donations are either not enabled or updating';
 			}
-			return `Current donation amount: <strong>${this.data.donationInfo.amountNew}€</strong>`;
+			return `Current donation amount: <strong>${this.data.donationInfo.amountNew}$</strong>`;
 		},
 	},
 	created() {
 		this.fetchData();
+		setTimeout(this.fetchData, 5000);
 	},
 	methods: {
 		fetchData() {

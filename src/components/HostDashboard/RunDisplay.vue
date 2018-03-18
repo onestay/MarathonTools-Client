@@ -14,8 +14,8 @@
 					:key="player.displayName">{{ player.displayName }}
 					<span v-if="index + 1 < run.players.length">, </span>
 				</span>
+				<hr>
 			</li>
-			<hr>
 		</ul>
 	</div>
 </template>

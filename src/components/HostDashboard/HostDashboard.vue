@@ -11,14 +11,14 @@
 						</div>
 					</div>
 				</div>
+				<div class="tile is-parent">
+					<div class="tile is-child" />
+				</div>
 				<div class="tile is-vertical">
 					<div class="tile">
 						<div class="tile is-parent is-vertical">
 							<div class="tile">
 								<mt-rd :r="data" />
-							</div>
-							<div class="tile">
-								<span>Fuck speedrun.com</span>
 							</div>
 						</div>
 					</div>
