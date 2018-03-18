@@ -108,7 +108,7 @@ export default {
 				this.$toast.open({
 					type: 'is-light',
 					message: 'Websocket connection created.',
-					position: 'is-top-left',
+					position: 'is-bottom',
 				});
 			});
 
