@@ -10,6 +10,25 @@
 				<span>Twitch is connected</span>
 				<br>
 				{{ viewers }}
+				<hr>
+				<div>Twitch Ads</div>
+				<b-field grouped>
+					<b-field label="Ad duration">
+						<b-select v-model="adDuration">
+							<option :value="30">30s</option>
+							<option :value="60">60s</option>
+							<option :value="90">90s</option>
+							<option :value="120">120s</option>
+							<option :value="150">150s</option>
+							<option :value="180">180s</option>
+						</b-select>
+					</b-field>
+					<b-field label="Run ad">
+						<button
+							class="button is-danger"
+							@click="runAd">Run ad</button>
+					</b-field>
+				</b-field>
 			</div>
 			<div v-else>
 				<span>Twitch isn't conntected.</span>
@@ -36,6 +55,7 @@ export default {
 		return {
 			twitchIsConnected: false,
 			isLoading: true,
+			adDuration: 30,
 		};
 	},
 	computed: {
@@ -65,6 +85,27 @@ export default {
 						this.twitchIsConnected = false;
 					}
 					this.isLoading = false;
+				});
+		},
+		runAd() {
+			this.$http.post('social/twitch/commercial', { length: this.adDuration })
+				.then((res) => {
+					if (res.ok) {
+						this.$toast.open({
+							type: 'is-success',
+							message: 'Okay',
+							position: 'is-bottom',
+							duration: 2000,
+						});
+					}
+				})
+				.catch((e) => {
+					this.$toast.open({
+						type: 'is-danger',
+						message: `Couldn't connect run commercial. Error: ${e.body.error}`,
+						position: 'is-bottom',
+						duration: 4000,
+					});
 				});
 		},
 	},
