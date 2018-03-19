@@ -32,7 +32,7 @@ export default {
 				useGrouping: true,
 				separator: '',
 				decimal: '.',
-				suffix: '€',
+				suffix: '$',
 			},
 		};
 	},
