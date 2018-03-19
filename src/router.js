@@ -16,6 +16,7 @@ import Live from './components/Live/Live.vue';
 import LdonationCount from './components/Live/Donations/DonationCount.vue';
 
 import Lruns from './components/Live/Runs/Runs.vue';
+import Lplayer from './components/Live/Runs/Player.vue';
 
 import Ltime from './components/Live/Timer/Time.vue';
 import LplayerTime from './components/Live/Timer/PlayerTimes.vue';
@@ -74,6 +75,10 @@ export default new Router({
 				{
 					path: 'time/player/:id',
 					component: LplayerTime,
+				},
+				{
+					path: 'player/:id',
+					component: Lplayer,
 				},
 			],
 		},
