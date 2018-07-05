@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueResource from 'vue-resource';
-import 'mdi/css/materialdesignicons.min.css';
+import '@mdi/font/css/materialdesignicons.min.css';
 import App from './App.vue';
 import router from './router';
 

@@ -13,9 +13,12 @@
 								<mt-status :data="data" />
 							</div>
 						</div>
-						<div class="tile is-parent">
+						<div class="tile is-parent is-vertical">
 							<div class="tile is-child">
 								<mt-runmanager :data="data" />
+							</div>
+							<div class="tile is-child">
+								<mt-cl :data="data" />
 							</div>
 						</div>
 					</div>
@@ -30,6 +33,7 @@ import Header from './Header.vue';
 import RunManager from './DashboardComponents/RunManager.vue';
 import Timer from './DashboardComponents/Timer.vue';
 import Status from './DashboardComponents/Status.vue';
+import Checklist from './DashboardComponents/Checklist.vue';
 
 export default {
 	components: {
@@ -37,6 +41,7 @@ export default {
 		'mt-runmanager': RunManager,
 		'mt-timer': Timer,
 		'mt-status': Status,
+		'mt-cl': Checklist,
 	},
 	props: {
 		data: {

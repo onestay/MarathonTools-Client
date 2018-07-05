@@ -42,6 +42,7 @@ export default {
 					amountNew: 0,
 					latestDifference: 0,
 				},
+				checklistItems: {},
 			},
 		};
 	},
@@ -61,6 +62,7 @@ export default {
 					this.data.runs = d.runs;
 					this.data.runIndex = d.runIndex;
 					this.data.timer.state = d.timerState;
+					this.data.checklistItems = d.checklistItems;
 					this.loading = false;
 				} else if (d.dataType === 'runUpdate') {
 					this.data.currentRun = d.currentRun;
