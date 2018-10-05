@@ -100,6 +100,8 @@ export default {
 					this.data.donationInfo.amountOld = d.old;
 					this.data.donationInfo.amountNew = d.new;
 					this.data.donationInfo.latestDifference = d.difference;
+				} else if (d.dataType === 'checklistUpdate') {
+					this.data.checklistItems = d.checklistItems;
 				}
 			});
 

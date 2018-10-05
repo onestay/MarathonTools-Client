@@ -20,7 +20,7 @@
 						class="field">
 						<b-checkbox
 							v-model="data.checklistItems[key]"
-							@input="updateChecklist(key)">{{ key }}</b-checkbox>
+							@input.once="updateChecklist(key)" >{{ key }}</b-checkbox>
 					</div>
 				</div>
 			</div>
@@ -41,6 +41,9 @@ export default {
 	methods: {
 		updateChecklist(key) {
 			this.$http.put(`checklist/toggle?item=${key}`);
+		},
+		nothing() {
+
 		},
 	},
 };
