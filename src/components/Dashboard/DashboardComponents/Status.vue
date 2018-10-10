@@ -79,11 +79,7 @@ export default {
 		fetchData() {
 			this.$http.get('social/twitch/verify')
 				.then((res) => {
-					if (res.body.data === 'true') {
-						this.twitchIsConnected = true;
-					} else {
-						this.twitchIsConnected = false;
-					}
+					this.twitchIsConnected = res.data.data === 'true';
 					this.isLoading = false;
 				});
 		},
@@ -102,7 +98,7 @@ export default {
 				.catch((e) => {
 					this.$toast.open({
 						type: 'is-danger',
-						message: `Couldn't connect run commercial. Error: ${e.body.error}`,
+						message: `Couldn't connect run commercial. Error: ${e.response.data.error}`,
 						position: 'is-bottom',
 						duration: 4000,
 					});

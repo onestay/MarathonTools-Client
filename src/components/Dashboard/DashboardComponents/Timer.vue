@@ -40,12 +40,13 @@
 		<hr>
 		<div class="columns">
 			<mt-player
-				class="column"
 				v-for="(p, i) in data.currentRun.players"
 				:key="p.displayName"
 				:player="p"
 				:timer-state="data.timer.state"
-				:player-index="i" />
+				:player-index="i"
+				class="column"
+			/>
 		</div>
 	</div>
 </template>

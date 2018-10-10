@@ -11,13 +11,21 @@
 							<ul class="menu-list">
 								<li><router-link
 									to="/dashboard/config/general"
-									active-class="is-active">General</router-link></li>
+									active-class="is-active">General</router-link>
+								</li>
 								<li><router-link
 									to="/dashboard/config/runs"
-									active-class="is-active">Runs</router-link></li>
+									active-class="is-active">Runs</router-link>
+								</li>
 								<li><router-link
 									to="/dashboard/config/social"
-									active-class="is-active">Social</router-link></li>
+									active-class="is-active">Social</router-link>
+								</li>
+								<li>
+									<router-link
+										to="/dashboard/config/checklist"
+										active-class="is-active">Checklist</router-link>
+								</li>
 							</ul>
 						</aside>
 					</div>

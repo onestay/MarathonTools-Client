@@ -6,9 +6,10 @@
 				v-if="!player.timer.finished"
 				class="tag is-success is-large">
 				<button
-					@click="timerPlayerDone()"
+					:disabled="timerState !== 0"
 					class="button is-success is-marginless is-paddingless"
-					:disabled="timerState !== 0">
+					@click="timerPlayerDone()"
+				>
 					<b-icon icon="check"/>
 					<span>Done</span>
 				</button>

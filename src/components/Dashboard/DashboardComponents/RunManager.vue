@@ -45,8 +45,8 @@
 							</button>
 						</div>
 						<div
-							class="dropdown-menu"
 							id="dropdown-menu4"
+							class="dropdown-menu"
 							role="menu">
 							<div class="dropdown-content">
 								<div class="dropdown-item">
@@ -70,15 +70,15 @@
 		</div>
 		<footer class="card-footer">
 			<a
-				class="button card-footer-item"
 				:disabled="data.prevRun.runID === '' || data.timer.state !== 2"
+				class="button card-footer-item"
 				@click="switchRuns('prev')">
 				<b-icon icon="chevron-left" />
 				<span>Previous ({{ data.prevRun.gameInfo.gameName }})</span>
 			</a>
 			<a
-				class="button card-footer-item"
 				:disabled="data.nextRun.runID === '' || data.timer.state !== 2"
+				class="button card-footer-item"
 				@click="switchRuns('next')">
 				<b-icon icon="chevron-right" />
 				<span>Next ({{ data.nextRun.gameInfo.gameName }})</span>
