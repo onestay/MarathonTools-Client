@@ -4,9 +4,12 @@ import '@mdi/font/css/materialdesignicons.min.css';
 import App from './App.vue';
 import router from './router';
 
-Vue.prototype.$http = axios;
+const axiosInstance = axios.create({
+	baseURL: `http://${window.location.hostname}:3000`,
+});
 
-Vue.http.options.root = `http://${window.location.hostname}:3000`;
+Vue.prototype.$http = axiosInstance;
+
 // eslint-disable-next-line
 new Vue({
 	el: '#app',
