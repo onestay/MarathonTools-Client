@@ -1,10 +1,10 @@
 import Vue from 'vue';
-import VueResource from 'vue-resource';
+import axios from 'axios';
 import '@mdi/font/css/materialdesignicons.min.css';
 import App from './App.vue';
 import router from './router';
 
-Vue.use(VueResource);
+Vue.prototype.$http = axios;
 
 Vue.http.options.root = `http://${window.location.hostname}:3000`;
 // eslint-disable-next-line

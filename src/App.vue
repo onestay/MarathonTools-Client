@@ -1,9 +1,10 @@
 <template>
 	<div>
 		<b-loading
+			v-if="loading"
 			:active="loading"
 			:can-cancel="false"
-			v-if="loading" />
+		/>
 		<router-view
 			v-else
 			:data="data" />

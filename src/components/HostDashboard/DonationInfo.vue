@@ -5,10 +5,11 @@
 		<div>
 			<p>Latest three donations:</p>
 			<ul
+				v-for="donation in donations"
+				:key="donation.name"
 				style="list-style-type: none;"
 				li
-				v-for="donation in donations"
-				:key="donation.name">
+			>
 				<li> <b-icon icon="account"/> <span>{{ donation.user }}</span> </li>
 				<li> <b-icon icon="currency-usd"/> {{ donation.amount }}€</li>
 				<li> <b-icon icon="message-text"/> {{ donation.message }}</li>

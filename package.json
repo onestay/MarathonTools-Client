@@ -8,15 +8,16 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "vue": "^2.5.17",
-    "vue-router": "^3.0.1",
     "@mdi/font": "^2.8.94",
+    "axios": "^0.18.0",
     "buefy": "^0.7.0",
     "countup.js": "^1.9.3",
     "moment": "^2.22.2",
     "moment-duration-format": "^2.2.2",
+    "vue": "^2.5.17",
     "vue-countup-v2": "^1.0.3",
-    "vue-resource": "^1.5.1"
+    "vue-resource": "^1.5.1",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.5",

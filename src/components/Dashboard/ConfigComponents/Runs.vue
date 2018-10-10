@@ -4,9 +4,10 @@
 			grouped
 			group-multiline>
 			<button
+				:disabled="!selected"
 				class="button field is-danger"
 				@click="deleteRun()"
-				:disabled="!selected">
+			>
 				<b-icon icon="close" />
 				<span>Delete selected</span>
 			</button>
@@ -63,8 +64,8 @@
 				</b-field>
 				<b-field grouped>
 					<b-field
-						:label="'Player ' + (i + 1)"
 						v-for="(player, i) in props.row.runData.players"
+						:label="'Player ' + (i + 1)"
 						:key="player.displayName">
 						<b-input v-model="props.row.runData.players[i].displayName" />
 					</b-field>
@@ -114,8 +115,9 @@
 						</button>
 					</div>
 					<p
+						v-if="addRun.players.length == 0"
 						class="has-text-centered has-text-weight-light is-italic"
-						v-if="addRun.players.length == 0">Click plus to add a player</p>
+					>Click plus to add a player</p>
 					<div
 						v-for="(player, i) in addRun.players"
 						:key="i">
