@@ -11,19 +11,6 @@
 				<b-icon icon="close" />
 				<span>Delete selected</span>
 			</button>
-			<b-field class="control is-flex">
-				<b-select
-					v-model="perPage"
-					:disabled="!pagination">
-					<option value="10">10 per page</option>
-					<option value="20">20 per page</option>
-					<option value="30">30 per page</option>
-					<option value="40">40 per page</option>
-				</b-select>
-			</b-field>
-			<div class="control is-flex">
-				<b-switch v-model="pagination">Pagination</b-switch>
-			</div>
 			<button
 				class="button field is-primary"
 				@click="modalActive = true">
@@ -35,10 +22,8 @@
 			:data="runData"
 			:columns="columns"
 			:striped="true"
-			:selected.sync="selected"
 			:loading="isLoading"
-			:paginated="pagination"
-			:per-page="perPage"
+			:selected.sync="selected"
 			detailed>
 			<template
 				slot="detail"
@@ -135,8 +120,9 @@
 						</b-field>
 					</div>
 					<div
+						v-if="addRun.players.length != 0"
 						style="display: flex; justify-content: center"
-						v-if="addRun.players.length != 0">
+					>
 						<button
 							class="button is-medium"
 							@click="addRun.players.splice(-1, 1)">
@@ -190,8 +176,6 @@ export default {
 	},
 	data() {
 		return {
-			pagination: true,
-			perPage: 10,
 			isLoading: true,
 			columns: [
 				{
@@ -257,6 +241,13 @@ export default {
 					this.$http.delete(`run/delete/${this.selected.runData.runID}`)
 						.then(() => {
 							this.$toast.open('Run succesfully deleted!');
+						})
+						.catch(() => {
+							this.$toast.open({
+								message: 'Request status not okay. Error:',
+								position: 'is-bottom',
+								type: 'is-danger',
+							});
 						});
 				},
 			});
@@ -278,18 +269,18 @@ export default {
 		},
 		saveEdit(run) {
 			this.$http.patch(`run/update/${run.runID}`, run)
-				.then((r) => {
-					if (!r.ok) {
-						this.$toast.open({
-							message: 'Request status not okay. Error:',
-							position: 'is-bottom',
-							type: 'is-danger',
-						});
-					}
+				.then(() => {
 					this.$toast.open({
 						message: 'Updated!',
 						position: 'is-bottom',
 						type: 'is-success',
+					});
+				})
+				.catch(() => {
+					this.$toast.open({
+						message: 'Request status not okay. Error:',
+						position: 'is-bottom',
+						type: 'is-danger',
 					});
 				});
 		},
@@ -306,8 +297,8 @@ export default {
 			this.modalActive = false;
 			this.addRun.gameInfo.releaseYear = parseInt(this.addRun.gameInfo.releaseYear, 10);
 			this.$http.post('run/add/single', this.addRun)
-				.then((r) => {
-					if (!r.ok) {
+				.then((res) => {
+					if (!res.data.ok) {
 						this.$toast.open({
 							message: 'Request status not okay. Error:',
 							position: 'is-bottom',
@@ -315,7 +306,7 @@ export default {
 						});
 						return;
 					} else if (this.addRun.after) {
-						this.$http.post(`run/move/${r.body.data}/${this.addRun.after}`);
+						this.$http.post(`run/move/${res.data.data}/${this.addRun.after}`);
 					}
 					this.$toast.open({
 						message: 'Added run!',
