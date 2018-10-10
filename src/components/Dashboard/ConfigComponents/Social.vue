@@ -4,13 +4,14 @@
 			<div class="tile is-child box">
 				<p class="title">Twitch</p>
 				<a
+					:disabled="twitch.isConnected"
 					:href="twitch.oauthUrl"
-					class="button is-primary"
 					:class="{ 'is-loading': twitch.oauthUrl === '' }"
-					:disabled="twitch.isConnected">Connect with Twitch</a>
+					class="button is-primary"
+				>Connect with Twitch</a>
 				<button
-					class="button is-danger"
 					v-if="twitch.isConnected"
+					class="button is-danger"
 					@click="deleteTwitchInfo">Delete Twitch Info</button>
 				<hr>
 				<div class="field">
@@ -57,26 +58,28 @@
 				<p class="title">Twitter</p>
 				{{ twitter.oauthurl }}
 				<a
+					:disabled="twitter.isConnected"
+					:class="{ 'is-loading': twitter.oauthUrl === '' }"
 					:href="twitter.oauthUrl"
 					class="button is-primary"
-					:class="{ 'is-loading': twitter.oauthUrl === '' }"
-					:disabled="twitter.isConnected">Connect with Twitter</a>
+				>Connect with Twitter</a>
 				<button
-					class="button is-danger"
 					v-if="twitter.isConnected"
+					class="button is-danger"
 					@click="deleteTwitterInfo">Delete Twitter Info</button>
 				<hr>
 				<b-field>
 					<b-switch
 						v-model="twitter.sendTweets"
 						:disabled="!twitter.isConnected"
-						@input="submitTwitterSettings">Send tweets on run changes</b-switch>
+						@change.native="submitTwitterSettings">Send tweets on run changes</b-switch>
 				</b-field>
 				<b-field label="Tweet Template">
 					<b-input
+						v-model="twitter.tweetTemplate.text"
 						type="textarea"
 						maxlength="240"
-						v-model="twitter.tweetTemplate.text"/>
+					/>
 				</b-field>
 				<b-field>
 					<b-checkbox v-model="twitter.tweetTemplate.forMultiple">For multiple runners</b-checkbox>
@@ -96,15 +99,17 @@
 				</div>
 				<b-collapse :open="false">
 					<button
+						slot="trigger"
 						class="button is-primary"
-						slot="trigger">
+					>
 						<span>Show existing templates</span>
 						<b-icon icon="chevron-down" />
 					</button>
 					<div
-						class="notification"
 						v-for="(template, i) in twitter.templates"
-						:key="template.text">
+						:key="template.text"
+						class="notification"
+					>
 						<div class="content">
 							{{ template.text }}
 							<br>
@@ -191,28 +196,30 @@ export default {
 		fetchData() {
 			this.$http.get('social/twitch/oauthurl')
 				.then((res) => {
-					this.twitch.oauthUrl = res.body.data;
+					this.twitch.oauthUrl = res.data.data;
 				});
 			this.$http.get('social/twitter/oauthurl')
 				.then((res) => {
-					this.twitter.oauthUrl = res.body.data;
+					this.twitter.oauthUrl = res.data.data;
 				});
 			this.$http.get('social/twitch/settings')
 				.then((res) => {
-					this.twitch.updateGame = res.body.gameUpdate;
-					this.twitch.updateTitle = res.body.titleUpdate;
-					this.twitch.viewersInDashboard = res.body.viewers;
-					this.twitch.template = res.body.templateString;
+					this.twitch.updateGame = res.data.gameUpdate;
+					this.twitch.updateTitle = res.data.titleUpdate;
+					this.twitch.viewersInDashboard = res.data.viewers;
+					this.twitch.template = res.data.templateString;
 				});
 			this.$http.get('social/twitch/executetemplate')
 				.then((res) => {
-					if (res.body.ok) {
-						this.twitch.title = res.body.data;
+					if (!res.data.ok && res.data.error === 'NOTEMPLATE') {
+						this.twitch.template = '';
+					} else if (res.data.ok) {
+						this.twitch.title = res.data.data;
 					}
 				});
 			this.$http.get('social/twitter/settings')
 				.then((res) => {
-					this.twitter.sendTweets = res.body.sendUpdates;
+					this.twitter.sendTweets = res.data.sendUpdates;
 				});
 			this.getTemplates();
 		},
@@ -224,27 +231,15 @@ export default {
 		},
 		verifyConnections() {
 			this.$http.get('social/twitch/verify')
-				.then((res) => {
-					if (res.body.data === 'true') {
-						this.twitch.isConnected = true;
-					} else {
-						this.twitch.isConnected = false;
-					}
-				});
+				// eslint-disable-next-line
+				.then(res => this.twitch.isConnected = res.data.data === 'true');
 			this.$http.get('social/twitter/verify')
-				.then((res) => {
-					if (res.body.data === 'true') {
-						this.twitter.isConnected = true;
-					} else {
-						this.twitter.isConnected = false;
-					}
-				});
+				// eslint-disable-next-line
+				.then(res => this.twitter.isConnected = res.data.data === 'true');
 		},
 		deleteTwitchInfo() {
 			this.$http.delete('social/twitch/token')
-				.then(() => {
-					this.verifyConnections();
-				});
+				.then(() => this.verifyConnections());
 		},
 		submitTwitchSettings() {
 			this.$http.put('social/twitch/settings', {
@@ -261,51 +256,47 @@ export default {
 					});
 					this.$http.get('social/twitch/executetemplate')
 						.then((res) => {
-							if (res.body.ok) {
-								this.twitch.title = res.body.data;
+							if (res.data.ok) {
+								this.twitch.title = res.data.data;
 							}
 						});
+				})
+				.catch(() => {
+					this.$toast.open({
+						message: 'Error saving settings',
+						position: 'is-bottom',
+						type: 'is-danger',
+					});
 				});
 		},
 		deleteTwitterInfo() {
 			this.$http.delete('social/twitter/token')
-				.then(() => {
-					this.verifyConnections();
-				});
+				.then(() => this.verifyConnections());
 		},
-		submitTwitterSettings(v) {
-			this.$http.put('social/twitter/settings', { sendTweets: v })
-				.then((r) => {
-					if (!r.ok) {
-						this.$toast.open({
-							message: 'Error saving settings',
-							position: 'is-bottom',
-							type: 'is-danger',
-						});
-						return;
-					}
+		submitTwitterSettings(e) {
+			this.$http.put('social/twitter/settings', { sendTweets: e.target.checked })
+				.then(() => {
 					this.$toast.open({
 						message: 'Settings saved',
 						position: 'is-bottom',
 						type: 'is-success',
+					});
+				})
+				.catch(() => {
+					this.$toast.open({
+						message: 'Error saving settings',
+						position: 'is-bottom',
+						type: 'is-danger',
 					});
 				});
 		},
 		submitTemplate() {
 			this.$http.post('social/twitter/template', this.twitter.tweetTemplate)
 				.then((r) => {
-					if (!r.ok) {
-						this.$toast.open({
-							message: 'Error adding template',
-							position: 'is-bottom',
-							type: 'is-danger',
-						});
-						return;
-					}
 					this.twitter.tweetTemplate.text = '';
 					this.twitter.tweetTemplate.forMultiple = false;
 
-					this.twitter.templates = r.body;
+					this.twitter.templates = r.data;
 					this.$toast.open({
 						message: 'Added template',
 						position: 'is-bottom',
@@ -323,21 +314,20 @@ export default {
 		getTemplates() {
 			this.$http.get('social/twitter/template')
 				.then((r) => {
-					this.twitter.templates = r.body;
+					this.twitter.templates = r.data;
 				});
 		},
 		deleteTemplate(i) {
 			this.$http.delete(`social/twitter/template/${i}`)
 				.then((r) => {
-					if (!r.ok) {
-						this.$toast.open({
-							message: 'Error adding template',
-							position: 'is-bottom',
-							type: 'is-danger',
-						});
-						return;
-					}
-					this.twitter.templates = r.body;
+					this.twitter.templates = r.data;
+				})
+				.catch(() => {
+					this.$toast.open({
+						message: 'Error adding template',
+						position: 'is-bottom',
+						type: 'is-danger',
+					});
 				});
 		},
 	},
