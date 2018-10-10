@@ -23,7 +23,7 @@
 					</div>
 					<div class="column">
 						<router-view
-						:data="data" />
+							:data="data" />
 					</div>
 				</div>
 			</div>
