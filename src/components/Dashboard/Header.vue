@@ -25,6 +25,9 @@
 						<router-link
 							class="navbar-item"
 							to="/dashboard/config/social">Social</router-link>
+						<router-link
+							class="navbar-item"
+							to="/dashboard/config/checklist">Checklist</router-link>
 					</div>
 				</div>
 			</div>
