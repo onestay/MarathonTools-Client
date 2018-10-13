@@ -89,12 +89,14 @@ export default {
 					}
 					this.data.timer.ms = moment.duration(d.t, 'seconds').format('S');
 				} else if (d.dataType === 'error') {
-					this.$toast.open({
-						duration: 5000,
-						message: d.error,
-						position: 'is-bottom',
-						type: 'is-danger',
-					});
+					if (!this.$route.includes('live')) {
+						this.$toast.open({
+							duration: 5000,
+							message: d.error,
+							position: 'is-bottom',
+							type: 'is-danger',
+						});
+					}
 				} else if (d.dataType === 'twitchViewerUpdate') {
 					this.data.twitchViewers = d.viewers;
 				} else if (d.dataType === 'donationUpdate') {
@@ -109,21 +111,24 @@ export default {
 			this.ws.onopen = (() => {
 				this.$http.get('donations/total/update/start')
 					.catch(() => console.log('donations updates already running'));
-
-				this.$toast.open({
-					type: 'is-light',
-					message: 'Websocket connection created.',
-					position: 'is-bottom',
-				});
+				if (!this.$route.includes('live')) {
+					this.$toast.open({
+						type: 'is-light',
+						message: 'Websocket connection created.',
+						position: 'is-bottom',
+					});
+				}
 			});
 
 			this.ws.onerror = (() => {
-				this.$toast.open({
-					type: 'is-danger',
-					message: 'Couldn\'t connect to Websocket or the connection was unexpectedly closed. Check if the backend is running. Reconnecting in 10 seconds',
-					position: 'is-bottom',
-					duration: 5000,
-				});
+				if (!this.$route.includes('live')) {
+					this.$toast.open({
+						type: 'is-danger',
+						message: 'Couldn\'t connect to Websocket or the connection was unexpectedly closed. Check if the backend is running. Reconnecting in 10 seconds',
+						position: 'is-bottom',
+						duration: 5000,
+					});
+				}
 			});
 
 			this.ws.onclose = (() => {
