@@ -50,7 +50,8 @@ export default {
 
 			const i = t.indexOf(':');
 			if (i !== -1) {
-				t = `${t.slice(0, i)} </br> ${t.slice(i + 1)}`;
+				// sorry martin :(
+				t = `${t.slice(0, i + 1)} </br> ${t.slice(i + 1)}`;
 			}
 
 			if (document.getElementsByClassName('textFitted').length > 0) {
