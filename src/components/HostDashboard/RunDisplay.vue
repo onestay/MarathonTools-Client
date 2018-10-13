@@ -59,7 +59,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .run-list li {
 	list-style-type: circle;
 }
