@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<router-view :data="data" />
+		<router-view :data="data"/>
 	</div>
 </template>
 
@@ -16,4 +16,3 @@ export default {
 	},
 };
 </script>
-

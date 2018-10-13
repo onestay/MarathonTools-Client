@@ -1,8 +1,13 @@
 <template>
-	<div :state="data.timer.state">{{ output }}</div>
+	<div
+		id="timer"
+		:state="data.timer.state"
+	>{{ output }}</div>
 </template>
 
 <script>
+import textfit from 'textfit';
+
 export default {
 	props: {
 		data: {
@@ -14,21 +19,41 @@ export default {
 	},
 	computed: {
 		output() {
+			const t = this.data.timer.formatted;
+
+			if (document.getElementsByClassName('textFitted').length > 0) {
+				document.getElementsByClassName('textFitted')[0].innerHTML = t;
+			}
+
 			return this.data.timer.formatted;
 		},
+	},
+	updated() {
+		textfit(document.getElementById('timer'), {
+			alignHoriz: false,
+			alignVert: true,
+			minFontSize: 10,
+			maxFontSize: 120,
+			multiLine: false,
+		});
+	},
+	mounted() {
+		textfit(document.getElementById('timer'), {
+			alignHoriz: false,
+			alignVert: true,
+			minFontSize: 10,
+			maxFontSize: 120,
+			multiLine: false,
+		});
 	},
 };
 </script>
 
 <style scoped>
-html {
-	background-color: #00ff00;
+#timer {
+	height: 100vh;
 }
-body {
-	color: white !important;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 50px;
-}
+
 div[state="0"] {
 	color: white;
 }

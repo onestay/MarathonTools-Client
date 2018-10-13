@@ -1,8 +1,10 @@
 <template>
-	<div>{{ output }}</div>
+	<div id="runs">{{ output }}</div>
 </template>
 
 <script>
+import textfit from 'textfit';
+
 export default {
 	props: {
 		data: {
@@ -12,9 +14,16 @@ export default {
 			},
 		},
 	},
+	data() {
+		return {
+			text: '',
+		};
+	},
 	computed: {
 		output() {
 			let c;
+			let t;
+
 			if (this.$route.params.type === 'current') {
 				c = this.data.currentRun;
 			} else if (this.$route.params.type === 'prev') {
@@ -28,29 +37,65 @@ export default {
 			if (!this.$route.params.part) {
 				return 'INVALID';
 			} else if (this.$route.params.part === 'game') {
-				return c.gameInfo.releaseYear ? `${c.gameInfo.gameName} (${c.gameInfo.releaseYear})` : c.gameInfo.gameName;
+				t = c.gameInfo.releaseYear ? `${c.gameInfo.gameName} (${c.gameInfo.releaseYear})` : c.gameInfo.gameName;
 			} else if (this.$route.params.part === 'category') {
-				return c.runInfo.category;
+				t = c.runInfo.category;
 			} else if (this.$route.params.part === 'estimate') {
-				return c.runInfo.estimate;
+				t = c.runInfo.estimate;
 			} else if (this.$route.params.part === 'platform') {
-				return c.runInfo.platform;
+				t = c.runInfo.platform;
 			} else if (this.$route.params.part === 'players') {
-				return c.players.map(p => p.displayName).join(', ');
+				t = c.players.map(p => p.displayName).join(', ');
+			}
+
+			const i = t.indexOf(':');
+			if (i !== -1) {
+				t = `${t.slice(0, i)} </br> ${t.slice(i + 1)}`;
+			}
+
+			if (document.getElementsByClassName('textFitted').length > 0) {
+				document.getElementsByClassName('textFitted')[0].innerHTML = t;
+			}
+
+			if (t) {
+				return t;
 			}
 			return 'no valid part found. has to be one of "game", "category", "estimate", "platform" or "players"';
 		},
 	},
+	updated() {
+		console.log('called update');
+		textfit(document.getElementById('runs'), {
+			alignHoriz: true,
+			alignVert: true,
+			minFontSize: 10,
+			maxFontSize: 80,
+			multiLine: true,
+		});
+
+	// html {
+	//	background: none !important;
+	//  overflow: hidden;
+	// }
+	// #runs {
+	// 	color: white !important;
+	// }
+	},
+	// mounted() {
+	// 	textfit(document.getElementById('timer'), {
+	// 		alignHoriz: false,
+	// 		alignVert: true,
+	// 		minFontSize: 10,
+	// 		maxFontSize: 120,
+	// 		multiLine: false,
+	// 	});
+	// },
+
 };
 </script>
 
 <style scoped>
-html {
-	background-color: #00ff00;
-}
-body {
-	color: white !important;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 50px;
+#runs {
+	height: 100vh;
 }
 </style>
