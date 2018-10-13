@@ -1,27 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-// components
-import Dashboard from './components/Dashboard/Dashboard.vue';
-import Config from './components/Dashboard/Config.vue';
-
-import ConfigGeneral from './components/Dashboard/ConfigComponents/General.vue';
-import ConfigRuns from './components/Dashboard/ConfigComponents/Runs.vue';
-import ConfigSocial from './components/Dashboard/ConfigComponents/Social.vue';
-import ConfigChecklist from './components/Dashboard/ConfigComponents/Checklist.vue';
-
-import HostDB from './components/HostDashboard/HostDashboard.vue';
-
-import Live from './components/Live/Live.vue';
-
-import LdonationCount from './components/Live/Donations/DonationCount.vue';
-
-import Lruns from './components/Live/Runs/Runs.vue';
-import Lplayer from './components/Live/Runs/Player.vue';
-
-import Ltime from './components/Live/Timer/Time.vue';
-import LplayerTime from './components/Live/Timer/PlayerTimes.vue';
-
 Vue.use(Router);
 
 export default new Router({
@@ -32,58 +11,58 @@ export default new Router({
 		},
 		{
 			path: '/dashboard',
-			component: Dashboard,
+			component: () => import(/* webpackChunkName: "dashboard" */ './components/Dashboard/Dashboard.vue'),
 		},
 		{
 			path: '/dashboard/config',
-			component: Config,
+			component: () => import(/* webpackChunkName: "config" */ './components/Dashboard/Config.vue'),
 			children: [
 				{
 					path: 'general',
-					component: ConfigGeneral,
+					component: () => import(/* webpackChunkName: "config" */ './components/Dashboard/ConfigComponents/General.vue'),
 				},
 				{
 					path: 'runs',
-					component: ConfigRuns,
+					component: () => import(/* webpackChunkName: "config" */ './components/Dashboard/ConfigComponents/Runs.vue'),
 				},
 				{
 					path: 'social',
-					component: ConfigSocial,
+					component: () => import(/* webpackChunkName: "config" */ './components/Dashboard/ConfigComponents/Social.vue'),
 					alias: ['/dashboard/config/social/twitch', '/dashboard/config/social/twitter'],
 				},
 				{
 					path: 'checklist',
-					component: ConfigChecklist,
+					component: () => import(/* webpackChunkName: "config" */ './components/Dashboard/ConfigComponents/Checklist.vue'),
 				},
 			],
 		},
 		{
 			path: '/host',
-			component: HostDB,
+			component: () => import(/* webpackChunkName: "host" */ './components/HostDashboard/HostDashboard.vue'),
 		},
 		{
 			path: '/live',
-			component: Live,
+			component: () => import(/* webpackChunkName: "live" */ './components/Live/Live.vue'),
 			children: [
 				{
 					path: 'runs/:type/:part',
-					component: Lruns,
+					component: () => import(/* webpackChunkName: "live" */ './components/Live/Runs/Runs.vue'),
 				},
 				{
 					path: 'donations',
-					component: LdonationCount,
+					component: () => import(/* webpackChunkName: "live" */ './components/Live/Donations/DonationCount.vue'),
 				},
 				{
 					path: 'time',
-					component: Ltime,
+					component: () => import(/* webpackChunkName: "live" */ './components/Live/Timer/Time.vue'),
 				},
 				{
 					path: 'time/player/:id',
-					component: LplayerTime,
+					component: () => import(/* webpackChunkName: "live" */ './components/Live/Timer/PlayerTimes.vue'),
 				},
 				{
 					path: 'player/:id',
-					component: Lplayer,
+					component: () => import(/* webpackChunkName: "live" */ './components/Live/Runs/Player.vue'),
 				},
 			],
 		},
