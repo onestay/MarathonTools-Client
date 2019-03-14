@@ -12,6 +12,8 @@
 </template>
 
 <script>
+/* eslint object-shorthand: "off", func-names: "off" */
+
 import Vue from 'vue';
 import Buefy from 'buefy';
 import moment from 'moment';
@@ -29,6 +31,7 @@ export default {
 				currentRun: {},
 				nextRun: {},
 				prevRun: {},
+				upNextRun: {},
 				runs: {},
 				runIndex: 0,
 				timer: {
@@ -43,9 +46,25 @@ export default {
 					amountNew: 0,
 					latestDifference: 0,
 				},
-				checklistItems: {},
+				checklistItems: [],
+				test: 'a',
+				checklistDone: false,
 			},
 		};
+	},
+	watch: {
+		'data.checklistItems': {
+			handler: function () {
+				let allChecked = true;
+				this.data.checklistItems.forEach((item) => {
+					if (!item.done) {
+						allChecked = false;
+					}
+				});
+				this.data.checklistDone = allChecked;
+			},
+			deep: true,
+		},
 	},
 	created() {
 		this.createWSConn();
@@ -64,6 +83,7 @@ export default {
 					this.data.runIndex = d.runIndex;
 					this.data.timer.state = d.timerState;
 					this.data.checklistItems = d.checklistItems;
+					this.data.upNextRun = d.upNext;
 					this.loading = false;
 				} else if (d.dataType === 'runUpdate') {
 					this.data.currentRun = d.currentRun;
@@ -105,13 +125,15 @@ export default {
 					this.data.donationInfo.latestDifference = d.difference;
 				} else if (d.dataType === 'checklistUpdate') {
 					this.data.checklistItems = d.checklistItems;
+				} else if (d.dataType === 'upNextUpdate') {
+					this.data.upNextRun = d.upNextRun;
 				}
 			});
 
 			this.ws.onopen = (() => {
 				this.$http.get('donations/total/update/start')
 					.catch(() => console.log('donations updates already running'));
-				if (!this.$route.includes('live')) {
+				if (!window.location.href.includes('live')) {
 					this.$toast.open({
 						type: 'is-light',
 						message: 'Websocket connection created.',

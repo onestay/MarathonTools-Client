@@ -15,12 +15,20 @@
 			<div class="card-content">
 				<div class="content">
 					<div
-						v-for="(value, key) in data.checklistItems"
-						:key="key"
-						class="field">
-						<b-checkbox
-							v-model="data.checklistItems[key]"
-							@input.once="updateChecklist(key)" >{{ key }}</b-checkbox>
+						v-for="(item) in data.checklistItems"
+						:key="item.key">
+
+						<label class="checkbox">
+							<input
+								:checked="item.done"
+								type="checkbox"
+								@click="updateChecklist(item.key)"
+							>
+							{{ item.key }}
+						</label>
+					</div>
+					<div v-if="data.checklistItems.length === 0">
+						<i>Go to Config > Checklist to add checklist items.</i>
 					</div>
 				</div>
 			</div>

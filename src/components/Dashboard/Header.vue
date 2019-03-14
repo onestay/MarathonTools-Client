@@ -3,13 +3,15 @@
 		<nav
 			class="navbar"
 			role="navigation">
-			<div class="navbar-brand container">
+			<div class="navbar-brand">
 				<div class="navbar-item">{{ fullName }}</div>
 				<router-link
 					class="navbar-item"
 					to="/dashboard"
 					active-class="is-active"
 					exact>Dashboard</router-link>
+			</div>
+			<div class="navbar-start">
 				<div class="navbar-item has-dropdown is-hoverable">
 					<router-link
 						class="navbar-link"
@@ -29,6 +31,14 @@
 							class="navbar-item"
 							to="/dashboard/config/checklist">Checklist</router-link>
 					</div>
+				</div>
+			</div>
+			<div class="navbar-end">
+				<div class="navbar-item">
+					Made by&nbsp;<a
+						href="https://twitter.com/onest4y"
+						target="_blank"
+						rel="noopener noreferrer">Onestay</a>
 				</div>
 			</div>
 		</nav>

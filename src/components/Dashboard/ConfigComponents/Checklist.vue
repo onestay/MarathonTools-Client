@@ -19,10 +19,10 @@
 			<div
 				v-for="(item) in data.checklistItems"
 				:key="item.key">
-				{{ item.key }}
 				<a
 					class="delete"
 					@click="removeItem(item.key)"/>
+				{{ item.key }}
 			</div>
 		</div>
 	</div>
