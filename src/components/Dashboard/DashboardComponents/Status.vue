@@ -5,6 +5,10 @@
 		</div>
 		<div v-else>
 			<h3 class="is-size-3">Status</h3>
+			<h4 class="is-size-4">Layout</h4>
+			<button
+				class="button is-primary"
+				@click="refreshLayout">Refresh Layout</button>
 			<h4 class="is-size-4">Social</h4>
 			<div v-if="twitchIsConnected">
 				<span>Twitch is connected</span>
@@ -76,6 +80,9 @@ export default {
 		this.fetchData();
 	},
 	methods: {
+		refreshLayout() {
+			this.$http.post('/run/layout');
+		},
 		fetchData() {
 			this.$http.get('social/twitch/verify')
 				.then((res) => {
