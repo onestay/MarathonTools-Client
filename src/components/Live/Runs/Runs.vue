@@ -29,7 +29,7 @@ export default {
 			} else if (this.$route.params.type === 'prev') {
 				c = this.data.prevRun;
 			} else if (this.$route.params.type === 'next') {
-				c = this.data.nextRun;
+				c = this.data.upNextRun;
 			} else {
 				return 'no valid type found. has to be one of "current", "prev" or "next"';
 			}
@@ -49,7 +49,7 @@ export default {
 			}
 
 			const i = t.indexOf(':');
-			if (i !== -1 && this.$route.params.part === 'game') {
+			if (i !== -1 && this.$route.params.part === 'game' && this.$route.params.type === 'current') {
 				// sorry martin :(
 				t = `${t.slice(0, i + 1)} </br> ${t.slice(i + 1)}`;
 			}
