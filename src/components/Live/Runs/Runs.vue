@@ -49,7 +49,7 @@ export default {
 			}
 
 			const i = t.indexOf(':');
-			if (i !== -1 && this.$route.params.part !== 'estimate') {
+			if (i !== -1 && this.$route.params.part === 'game') {
 				// sorry martin :(
 				t = `${t.slice(0, i + 1)} </br> ${t.slice(i + 1)}`;
 			}
