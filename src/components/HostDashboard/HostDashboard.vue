@@ -27,11 +27,12 @@
 					<div class="tile is-child">
 						<div class="content">
 							<iframe
-								src="https://www.twitch.tv/embed/imaqtpie/chat"
+								id="riotgames"
+								src="https://www.twitch.tv/embed/riotgames/chat"
 								frameborder="0"
-								height="600"
+								height="800"
 								width="350"
-								scrolling="no" />
+								scrolling="yes" />
 						</div>
 					</div>
 				</div>

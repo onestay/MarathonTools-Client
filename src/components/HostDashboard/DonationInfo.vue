@@ -50,10 +50,9 @@ export default {
 		fetchData() {
 			this.$http.get('donations/all')
 				.then((res) => {
-					this.donations = res.body.donations.slice(0, 3);
+					this.donations = res.data.donations.slice(0, 3);
 				});
 		},
 	},
 };
 </script>
-
