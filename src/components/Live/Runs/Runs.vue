@@ -67,7 +67,7 @@ export default {
 	updated() {
 		console.log('called update');
 		textfit(document.getElementById('runs'), {
-			alignHoriz: true,
+			alignHoriz: this.$route.params.type === 'current',
 			alignVert: true,
 			minFontSize: 10,
 			maxFontSize: 80,

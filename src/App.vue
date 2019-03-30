@@ -100,6 +100,7 @@ export default {
 					this.data.nextRun = d.nextRun;
 					this.data.prevRun = d.prevRun;
 					this.data.runIndex = d.runIndex;
+					this.data.upNextRun = d.upNext;
 				} else if (d.dataType === 'timeUpdate') {
 					this.data.timer.time = d.t;
 					if (d.t >= 3600) {
