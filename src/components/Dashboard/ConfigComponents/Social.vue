@@ -178,18 +178,19 @@ export default {
 			}
 			return;
 		}
-		// basically twitter sucks huge dick and put it's callback stuff before the #
-		// example callback url: http://localhost:4000/?oauth_token=XXX&oauth_verifier=XXX#/dashboard/config/social/twitter
-		// that means the oauth stuff is at s[3]
-		const uri = window.location.href.split('/');
-		if (uri[3].search('oauth_token') === 1) {
-			// get the query stuff
-			const query = uri[3].slice(1, -1);
-			this.$http.post(`social/twitter/auth?${query}`)
-				.then(() => {
-					this.verifyConnections();
-					window.location.href = '/#/dashboard/config/social';
-				});
+		if (lastPart === 'twitter') {
+			if (this.$route.query.oauth_token) {
+				this.$http.post(`social/twitter/auth?oauth_token=${this.$route.query.oauth_token}&oauth_verifier=${this.$route.query.oauth_verifier}`)
+					.then(() => {
+						this.verifyConnections();
+						this.$router.push('/dashboard/config/social');
+					})
+					.catch(() => {
+						this.createAlert('Error', 'Couldn\'t connect with Twitter');
+					});
+			} else if (this.$route.query.denied) {
+				this.createAlert('Error', 'Couldn\'t connect with Twitter');
+			}
 		}
 	},
 	methods: {
