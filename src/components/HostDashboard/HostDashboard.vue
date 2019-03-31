@@ -1,55 +1,28 @@
 <template>
-	<div class="section">
-		<h2 class="is-size-3 has-text-left">GSM Host Dashboard Panel</h2>
-		<hr>
-		<div class="container">
-			<div class="tile is-ancestor">
-				<div class="tile is-parent">
-					<div class="tile is-child">
-						<div class="content">
-							<mt-di :data="data" />
-						</div>
-					</div>
-				</div>
-				<div class="tile is-parent">
-					<div class="tile is-child" />
-				</div>
-				<div class="tile is-vertical">
-					<div class="tile">
-						<div class="tile is-parent is-vertical">
-							<div class="tile">
-								<mt-rd :r="data" />
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="tile is-parent">
-					<div class="tile is-child">
-						<div class="content">
-							<iframe
-								id="riotgames"
-								src="https://www.twitch.tv/embed/riotgames/chat"
-								frameborder="0"
-								height="800"
-								width="350"
-								scrolling="yes" />
-						</div>
-					</div>
-				</div>
+	<div>
+		<div class="columns back" id="top-bar">
+			<div class="column">
+				<span class="text-size has-text-white">{{ data.timer.formatted }}</span>
+			</div>
+			<div class="column donation-text">
+				<span class="text-size has-text-white">{{ data.donationInfo.amountNew }}$</span>
+			</div>
+		</div>
+		<div class="columns">
+			<div class="column">
+				<iframe
+					id="chat"
+					frameborder="0"
+					scrolling="yes"
+					src="https://www.twitch.tv/embed/riotgames/chat?darkpopout"
+				/>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import RunDisplay from './RunDisplay.vue';
-import DonationInfo from './DonationInfo.vue';
-
 export default {
-	components: {
-		'mt-rd': RunDisplay,
-		'mt-di': DonationInfo,
-	},
 	props: {
 		data: {
 			type: Object,
@@ -58,6 +31,31 @@ export default {
 			},
 		},
 	},
-
+	mounted() {
+		document.getElementById('chat').style.height = `${document.documentElement.clientHeight - document.getElementById('top-bar').clientHeight + 120}px`;
+	},
 };
 </script>
+<style>
+#chat {
+	width: 100%;
+}
+.chat-input {
+	display: none;
+}
+.back {
+	background-image: url("./host_background.png");
+	background-position: bottom;
+	margin: 0 !important;
+}
+.donation-text {
+	text-align: right;
+}
+.text-size {
+	font-size: 4rem;
+}
+html {
+	height: 100%;
+	overflow: hidden;
+}
+</style>
