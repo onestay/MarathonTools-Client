@@ -114,8 +114,8 @@
 							<b-field label="Twitter handle">
 								<b-input v-model="player.twitterName"/>
 							</b-field>
-							<b-field label="Country code">
-								<b-input v-model="player.country"/>
+							<b-field label="Twitch name">
+								<b-input v-model="player.twitchName"/>
 							</b-field>
 						</b-field>
 					</div>
