@@ -36,7 +36,9 @@ export default {
 
 			if (!this.$route.params.part) {
 				return 'INVALID';
-			} else if (this.$route.params.part === 'game') {
+			}
+
+			if (this.$route.params.part === 'game') {
 				t = c.gameInfo.releaseYear ? `${c.gameInfo.gameName} (${c.gameInfo.releaseYear})` : c.gameInfo.gameName;
 			} else if (this.$route.params.part === 'category') {
 				t = c.runInfo.category;
@@ -67,7 +69,7 @@ export default {
 	updated() {
 		console.log('called update');
 		textfit(document.getElementById('runs'), {
-			alignHoriz: this.$route.params.type === 'current',
+			alignHoriz: false,
 			alignVert: true,
 			minFontSize: 10,
 			maxFontSize: 80,

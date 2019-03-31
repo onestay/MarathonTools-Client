@@ -1,6 +1,8 @@
 <template>
 	<div>
-		<div class="columns back" id="top-bar">
+		<div
+			id="top-bar"
+			class="columns back">
 			<div class="column">
 				<span class="text-size has-text-white">{{ data.timer.formatted }}</span>
 			</div>
