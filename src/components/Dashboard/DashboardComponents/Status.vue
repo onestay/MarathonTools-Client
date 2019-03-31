@@ -15,6 +15,15 @@
 				<br>
 				{{ viewers }}
 				<hr>
+				<div>Social Updates</div>
+				<button
+					class="button is-primary"
+					@click="updateSocial('twitch')">Update Twitch info</button>
+				<button
+					style="margin-left: 10px;"
+					class="button is-primary"
+					@click="updateSocial('twitter')">Send tweet</button>
+				<hr>
 				<div>Twitch Ads</div>
 				<b-field grouped>
 					<b-field label="Ad duration">
@@ -80,6 +89,45 @@ export default {
 		this.fetchData();
 	},
 	methods: {
+		updateSocial(service) {
+			if (service === 'twitch') {
+				this.$http.put('/social/twitch/update')
+					.then(() => {
+						this.$toast.open({
+							type: 'is-success',
+							message: 'Updated Twitch info',
+							position: 'is-bottom',
+							duration: 2000,
+						});
+					})
+					.catch((e) => {
+						this.$toast.open({
+							type: 'is-danger',
+							message: `Couldn't update twitch info. Error: ${e.response.data.error}`,
+							position: 'is-bottom',
+							duration: 4000,
+						});
+					});
+			} else if (service === 'twitter') {
+				this.$http.post('/social/twitter/update')
+					.then(() => {
+						this.$toast.open({
+							type: 'is-success',
+							message: 'Sent tweet',
+							position: 'is-bottom',
+							duration: 2000,
+						});
+					})
+					.catch((e) => {
+						this.$toast.open({
+							type: 'is-danger',
+							message: `Couldn't send tweet info. Error: ${e.response.data.error}`,
+							position: 'is-bottom',
+							duration: 4000,
+						});
+					});
+			}
+		},
 		refreshLayout() {
 			this.$http.post('/run/layout');
 		},
