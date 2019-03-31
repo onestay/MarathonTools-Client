@@ -62,7 +62,7 @@ export default new Router({
 					component: () => import(/* webpackChunkName: "live" */ './components/Live/Timer/PlayerTimes.vue'),
 				},
 				{
-					path: 'player/:id',
+					path: 'player/:id/:part',
 					component: () => import(/* webpackChunkName: "live" */ './components/Live/Runs/Player.vue'),
 				},
 			],

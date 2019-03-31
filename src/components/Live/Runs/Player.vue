@@ -1,8 +1,12 @@
 <template>
-	<div>{{ output }}</div>
+	<div id="player" v-html="output"></div>
 </template>
 
 <script>
+import textfit from 'textfit';
+import twitterLogo from './Twitter_bird_logo_2012.svg.png';
+import twitchLogo from './Glitch_Purple_RGB.svg';
+
 export default {
 	props: {
 		data: {
@@ -12,27 +16,93 @@ export default {
 			},
 		},
 	},
+	data() {
+		return {
+			circleText: '',
+			circleRunning: false,
+			wh: 1,
+			wh2: 1,
+		};
+	},
 	computed: {
 		output() {
-			if (this.data.currentRun.players.length === 1) {
-				return '';
-			} else if (this.$route.params.id && parseInt(this.$route.params.id, 10) >= this.data.currentRun.players.length) {
+			if (this.$route.params.id && parseInt(this.$route.params.id, 10) >= this.data.currentRun.players.length) {
 				return '';
 			}
 			const p = this.data.currentRun.players[this.$route.params.id];
-			return p.displayName;
+			let t;
+			if (!this.$route.params.part) {
+				return 'INVALID';
+			}
+
+			if (this.$route.params.part === 'name') {
+				t = p.displayName;
+			} else if (this.$route.params.part === 'twitter') {
+				t = p.twitterName;
+			} else if (this.$route.params.part === 'twitch') {
+				t = p.twitchName;
+			} else if (this.$route.params.part === 'circle') {
+				if (!this.circleRunning) {
+					this.startCircle(p);
+					this.circleRunning = true;
+				}
+				t = this.circleText;
+			}
+
+			if (document.getElementsByClassName('textFitted').length > 0) {
+				document.getElementsByClassName('textFitted')[0].innerHTML = t;
+			}
+
+			return t;
+		},
+	},
+	updated() {
+		console.log('called update');
+		textfit(document.getElementById('player'), {
+			alignHoriz: false,
+			alignVert: true,
+			minFontSize: 10,
+			maxFontSize: 80,
+			multiLine: true,
+		});
+
+		this.wh = parseInt(window.getComputedStyle(document.getElementsByClassName('textFitted')[0]).getPropertyValue('font-size'), 10);
+	},
+	methods: {
+		startCircle(playerInfo) {
+			let i = 1;
+			const props = [playerInfo.displayName, playerInfo.twitchName, playerInfo.twitterName];
+
+			setInterval(() => {
+				let logo;
+				if (i === 1) {
+					logo = twitchLogo;
+				} else if (i === 2) {
+					logo = twitterLogo;
+				} else if (i === 3) {
+					logo = null;
+				}
+				this.circleText = logo ? `<span><img src="${logo}" style="width:${this.wh}px; height:${this.wh * 0.8135}px;vertical-align:middle;"/>/${props[i]}</span>` : `<span>${props[i]}</span>`;
+
+				if (i === 2) {
+					i = 0;
+				} else {
+					i++;
+				}
+			}, 1000);
 		},
 	},
 };
+// style="width:${wh}px; height:${wh}px; vertical-align: bottom;
 </script>
 
-<style scoped>
-html {
-	background-color: #00ff00;
+<style>
+#player {
+	height: 100vh;
 }
-body {
-	color: white !important;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 50px;
+.social-img {
+	width: 120px;
+	height: 120px;
+	vertical-align: bottom;
 }
 </style>
