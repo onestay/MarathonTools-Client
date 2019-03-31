@@ -47,17 +47,37 @@
 						<b-input v-model="props.row.runData.runInfo.estimate" />
 					</b-field>
 				</b-field>
-				<b-field grouped>
-					<b-field
-						v-for="(player, i) in props.row.runData.players"
-						:label="'Player ' + (i + 1)"
-						:key="player.displayName">
+				<b-field
+					v-for="(player, i) in props.row.runData.players"
+					:key="player.displayName"
+					grouped>
+					<b-field :label="`Player ${i+1} Name`">
 						<b-input v-model="props.row.runData.players[i].displayName" />
+					</b-field>
+					<b-field :label="`Player ${i+1} Twitter`">
+						<b-input v-model="props.row.runData.players[i].twitterName" />
+					</b-field>
+					<b-field :label="`Player ${i+1} Twitch`">
+						<b-input v-model="props.row.runData.players[i].twitchName" />
 					</b-field>
 				</b-field>
 				<button
 					class="button is-success is-medium"
 					@click="saveEdit(props.row.runData)">Save edits</button>
+				<b-field label="Move">
+					<b-select v-model="moveRunEditID">
+						<option
+							v-for="run in data.runs"
+							:value="run.runID"
+							:key="run.runID">
+							{{ run.gameInfo.gameName }}
+						</option>
+					</b-select>
+				</b-field>
+				<button
+					class="button is-success is-medium"
+					@click="moveRun(props.row.runData)"
+				>Move run</button>
 			</template>
 		</b-table>
 		<b-modal
@@ -177,6 +197,7 @@ export default {
 	data() {
 		return {
 			isLoading: true,
+			moveRunEditID: '',
 			columns: [
 				{
 					field: 'game',
@@ -230,6 +251,9 @@ export default {
 		this.updateTable();
 	},
 	methods: {
+		moveRun(runData) {
+			this.$http.post(`run/move/${runData.runID}/${this.moveRunEditID}`);
+		},
 		deleteRun() {
 			this.$dialog.confirm({
 				title: 'Deleting run',
