@@ -50,7 +50,7 @@
 		</div>
 		<div
 			v-if="!data.checklistDone"
-			class="is-size-5 has-text-centered"><strong class="has-text-danger">Checklist isn't done!</strong></div>
+			class="is-size-5 has-text-centered"><strong class="">Checklist isn't done!</strong></div>
 	</div>
 </template>
 
@@ -78,5 +78,4 @@ export default {
 </script>
 
 <style>
-
 </style>

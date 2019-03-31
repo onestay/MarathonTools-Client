@@ -6,7 +6,9 @@
 				<div class="container">
 					<div class="tile is-ancestor">
 						<div class="tile is-vertical is-parent">
-							<div class="tile is-child box is-primary">
+							<div
+								:class="{'red-bg': !data.checklistDone}"
+								class="tile is-child box is-primary">
 								<mt-timer :data="data" />
 							</div>
 							<div class="tile is-child box">
@@ -53,3 +55,8 @@ export default {
 	},
 };
 </script>
+<style>
+.red-bg {
+	background-color: red;
+}
+</style>
