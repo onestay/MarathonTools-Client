@@ -22,6 +22,10 @@ export default {
 			circleRunning: false,
 			wh: 1,
 			wh2: 1,
+			circleInterval: null,
+			player: {
+				displayName: '',
+			},
 		};
 	},
 	computed: {
@@ -38,12 +42,17 @@ export default {
 			if (this.$route.params.part === 'name') {
 				t = p.displayName;
 			} else if (this.$route.params.part === 'twitter') {
-				t = p.twitterName;
+				t = `<span><img src="${twitterLogo}" style="width:${this.wh}px; height:${this.wh * 0.8135}px;vertical-align:middle;"/>/${p.twitterName}</span>`;
 			} else if (this.$route.params.part === 'twitch') {
-				t = p.twitchName;
+				t = `<span><img src="${twitchLogo}" style="width:${this.wh}px; height:${this.wh * 0.8135}px;vertical-align:middle;"/>/${p.twitchName}</span>`;
 			} else if (this.$route.params.part === 'circle') {
+				if (this.player.displayName !== p.displayName && this.circleRunning) {
+					this.circleRunning = false;
+					clearInterval(this.circleInterval);
+				}
 				if (!this.circleRunning) {
 					this.startCircle(p);
+					this.player = p;
 					this.circleRunning = true;
 				}
 				t = this.circleText;
@@ -71,10 +80,24 @@ export default {
 	methods: {
 		startCircle(playerInfo) {
 			let i = 1;
-			const props = [playerInfo.displayName, playerInfo.twitchName, playerInfo.twitterName];
+			let props;
+			if (playerInfo.twitchName.length === 0 && playerInfo.twitterName.length === 0) {
+				props = [playerInfo.displayName];
+			} else if (playerInfo.twitchName.length === 0) {
+				props = [playerInfo.displayName, '', playerInfo.twitterName];
+			} else if (playerInfo.twitterName.length === 0) {
+				props = [playerInfo.displayName, playerInfo.twitchName, ''];
+			} else {
+				props = [playerInfo.displayName, playerInfo.twitchName, playerInfo.twitterName];
+			}
 
-			setInterval(() => {
+			this.circleInterval = setInterval(() => {
 				let logo;
+				if (i === 1 && props[1].length === 0) {
+					i = 2;
+				} else if (i === 2 && props[2].length === 0) {
+					i = 0;
+				}
 				if (i === 1) {
 					logo = twitchLogo;
 				} else if (i === 2) {
