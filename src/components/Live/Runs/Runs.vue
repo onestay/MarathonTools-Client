@@ -39,7 +39,7 @@ export default {
 			}
 
 			if (this.$route.params.part === 'game') {
-				t = c.gameInfo.releaseYear ? `${c.gameInfo.gameName} (${c.gameInfo.releaseYear})` : c.gameInfo.gameName;
+				t = c.gameInfo.releaseYear ? `${c.gameInfo.gameName} (${c.gameInfo.releaseYear}) </br> ${c.runInfo.category}` : `${c.gameInfo.gameName} </br> ${c.runInfo.category}`;
 			} else if (this.$route.params.part === 'category') {
 				t = c.runInfo.category;
 			} else if (this.$route.params.part === 'estimate') {
@@ -55,6 +55,7 @@ export default {
 				// sorry martin :(
 				t = `${t.slice(0, i + 1)} </br> ${t.slice(i + 1)}`;
 			}
+
 
 			if (document.getElementsByClassName('textFitted').length > 0) {
 				document.getElementsByClassName('textFitted')[0].innerHTML = t;
