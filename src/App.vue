@@ -49,6 +49,7 @@ export default {
 				checklistItems: [],
 				test: 'a',
 				checklistDone: false,
+				settings: {},
 			},
 		};
 	},
@@ -84,7 +85,11 @@ export default {
 					this.data.timer.state = d.timerState;
 					this.data.checklistItems = d.checklistItems;
 					this.data.upNextRun = d.upNext;
+					this.data.settings = d.settings;
+
 					this.loading = false;
+				} else if (d.dataType === 'settingsUpdate') {
+					this.data.settings = d.settings;
 				} else if (d.dataType === 'runUpdate') {
 					this.data.currentRun = d.currentRun;
 					this.data.nextRun = d.nextRun;
