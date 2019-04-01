@@ -39,7 +39,7 @@ export default {
 			}
 
 			if (this.$route.params.part === 'game') {
-				t = c.gameInfo.releaseYear ? `${c.gameInfo.gameName} (${c.gameInfo.releaseYear}) </br> ${c.runInfo.category}` : `${c.gameInfo.gameName} </br> ${c.runInfo.category}`;
+				t = c.gameInfo.releaseYear ? `${c.gameInfo.gameName} (${c.gameInfo.releaseYear})` : `${c.gameInfo.gameName}`;
 			} else if (this.$route.params.part === 'category') {
 				t = c.runInfo.category;
 			} else if (this.$route.params.part === 'estimate') {
@@ -48,10 +48,12 @@ export default {
 				t = c.runInfo.platform;
 			} else if (this.$route.params.part === 'players') {
 				t = c.players.map(p => p.displayName).join(', ');
+			} else if (this.$route.params.part === 'gamecat') {
+				t = c.gameInfo.releaseYear ? `${c.gameInfo.gameName} (${c.gameInfo.releaseYear}) </br> ${c.runInfo.category}` : `${c.gameInfo.gameName} </br> ${c.runInfo.category}`;
 			}
 
 			const i = t.indexOf(':');
-			if (i !== -1 && this.$route.params.part === 'game' && this.$route.params.type === 'current') {
+			if (i !== -1 && (this.$route.params.part === 'gamecat' || this.$route.params.part === 'game') && this.$route.params.type === 'current') {
 				// sorry martin :(
 				t = `${t.slice(0, i + 1)} </br> ${t.slice(i + 1)}`;
 			}
