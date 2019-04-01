@@ -34,17 +34,17 @@ export default {
 				return '';
 			}
 			const p = this.data.currentRun.players[this.$route.params.id];
-			let t;
+			let t = '';
 			if (!this.$route.params.part) {
 				return 'INVALID';
 			}
 
 			if (this.$route.params.part === 'name') {
 				t = p.displayName;
-			} else if (this.$route.params.part === 'twitter') {
-				t = `<span><img src="${twitterLogo}" style="width:${this.wh}px; height:${this.wh * 0.8135}px;vertical-align:middle;"/>/${p.twitterName}</span>`;
-			} else if (this.$route.params.part === 'twitch') {
-				t = `<span><img src="${twitchLogo}" style="width:${this.wh}px; height:${this.wh * 0.8135}px;vertical-align:middle;"/>/${p.twitchName}</span>`;
+			} else if (this.$route.params.part === 'twitter' && p.twitterName) {
+				t = `<span><img src="${twitterLogo}" style="width:${this.wh}px; height:${this.wh * 0.8135}px;vertical-align:middle;"/>${p.twitterName}</span>`;
+			} else if (this.$route.params.part === 'twitch' && p.twitchName) {
+				t = `<span><img src="${twitchLogo}" style="width:${this.wh}px; height:${this.wh * 0.8135}px;vertical-align:middle;"/>${p.twitchName}</span>`;
 			} else if (this.$route.params.part === 'circle') {
 				if (this.player.displayName !== p.displayName && this.circleRunning) {
 					this.circleRunning = false;
@@ -79,7 +79,7 @@ export default {
 	},
 	methods: {
 		startCircle(playerInfo) {
-			let i = 1;
+			let i = 0;
 			let props;
 			if (playerInfo.twitchName.length === 0 && playerInfo.twitterName.length === 0) {
 				props = [playerInfo.displayName];
@@ -105,7 +105,7 @@ export default {
 				} else if (i === 3) {
 					logo = null;
 				}
-				this.circleText = logo ? `<span><img src="${logo}" style="width:${this.wh}px; height:${this.wh * 0.8135}px;vertical-align:middle;"/>/${props[i]}</span>` : `<span>${props[i]}</span>`;
+				this.circleText = logo ? `<span><img src="${logo}" style="width:${this.wh}px; height:${this.wh * 0.8135}px;vertical-align:middle;">${props[i]}</span>` : `<span>${props[i]}</span>`;
 
 				if (i === 2) {
 					i = 0;
