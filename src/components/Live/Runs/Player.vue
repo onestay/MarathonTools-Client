@@ -1,5 +1,7 @@
 <template>
-	<div id="player" v-html="output"></div>
+	<div
+		id="player"
+		v-html="output" />
 </template>
 
 <script>
@@ -47,6 +49,7 @@ export default {
 				t = `<span><img src="${twitchLogo}" style="width:${this.wh}px; height:${this.wh * 0.8135}px;vertical-align:middle;"/>${p.twitchName}</span>`;
 			} else if (this.$route.params.part === 'circle') {
 				if (this.player.displayName !== p.displayName && this.circleRunning) {
+					/* eslint-disable vue/no-side-effects-in-computed-properties */
 					this.circleRunning = false;
 					clearInterval(this.circleInterval);
 				}
@@ -54,6 +57,7 @@ export default {
 					this.startCircle(p);
 					this.player = p;
 					this.circleRunning = true;
+					/* eslint-enable vue/no-side-effects-in-computed-properties */
 				}
 				t = this.circleText;
 			}
@@ -66,7 +70,6 @@ export default {
 		},
 	},
 	updated() {
-		console.log('called update');
 		textfit(document.getElementById('player'), {
 			alignHoriz: false,
 			alignVert: true,

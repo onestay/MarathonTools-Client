@@ -52,7 +52,6 @@ export default {
 					this.$refs.add.$el.children[0].focus();
 				})
 				.catch((e) => {
-					console.log(e);
 					this.$toast.open({
 						message: 'Couldn\'t add checklist item',
 						position: 'is-bottom',

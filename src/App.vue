@@ -132,8 +132,7 @@ export default {
 			});
 
 			this.ws.onopen = (() => {
-				this.$http.get('donations/total/update/start')
-					.catch(() => console.log('donations updates already running'));
+				this.$http.get('donations/total/update/start');
 				if (!window.location.href.includes('live')) {
 					this.$toast.open({
 						type: 'is-light',

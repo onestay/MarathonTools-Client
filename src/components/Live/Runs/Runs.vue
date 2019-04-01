@@ -70,7 +70,6 @@ export default {
 		},
 	},
 	updated() {
-		console.log('called update');
 		textfit(document.getElementById('runs'), {
 			alignHoriz: false,
 			alignVert: true,

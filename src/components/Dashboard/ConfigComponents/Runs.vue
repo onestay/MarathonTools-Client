@@ -329,7 +329,8 @@ export default {
 							type: 'is-danger',
 						});
 						return;
-					} else if (this.addRun.after) {
+					}
+					if (this.addRun.after) {
 						this.$http.post(`run/move/${res.data.data}/${this.addRun.after}`);
 					}
 					this.$toast.open({
