@@ -82,7 +82,7 @@ export default {
 			if (this.data.donationInfo.amountOld === -1) {
 				return 'Donations are either not enabled or updating';
 			}
-			return `Current donation amount: ${this.data.donationInfo.amountNew}€`;
+			return `Current donation amount: ${this.data.donationInfo.amountNew}${this.data.settings.currency}`;
 		},
 	},
 	created() {

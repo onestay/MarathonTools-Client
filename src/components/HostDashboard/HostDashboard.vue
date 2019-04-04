@@ -14,9 +14,9 @@
 			<div class="column">
 				<iframe
 					id="chat"
+					:src="`https://www.twitch.tv/embed/${data.settings.chat}/chat?darkpopout`"
 					frameborder="0"
 					scrolling="yes"
-					src="https://www.twitch.tv/embed/riotgames/chat?darkpopout"
 				/>
 			</div>
 		</div>

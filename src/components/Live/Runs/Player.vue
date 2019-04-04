@@ -115,7 +115,7 @@ export default {
 				} else {
 					i++;
 				}
-			}, 1000);
+			}, this.data.settings.socialCircleTime);
 		},
 	},
 };
