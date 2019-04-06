@@ -50,10 +50,10 @@ export default {
 			} else if (this.$route.params.part === 'players') {
 				t = c.players.map(p => p.displayName).join(', ');
 			} else if (this.$route.params.part === 'gamecat') {
-				t = c.gameInfo.releaseYear ? `${c.gameInfo.gameName} (${c.gameInfo.releaseYear}) </br> ${c.runInfo.category}` : `${c.gameInfo.gameName} </br> <span style="font-size:${this.wh * 0.7}px">${c.runInfo.category}</span>`;
+				t = c.gameInfo.releaseYear ? `${c.gameInfo.gameName} (${c.gameInfo.releaseYear}) </br> <span style="font-size:${this.wh * 0.7}px">${c.runInfo.category}</span>` : `${c.gameInfo.gameName} </br> <span style="font-size:${this.wh * 0.7}px">${c.runInfo.category}</span>`;
 			}
 
-			const i = t.indexOf(':');
+			const i = c.gameInfo.gameName.indexOf(':');
 			if (i !== -1 && (this.$route.params.part === 'gamecat' || this.$route.params.part === 'game') && this.$route.params.type === 'current') {
 				// sorry martin :(
 				t = `${t.slice(0, i + 1)} </br> ${t.slice(i + 1)}`;
