@@ -17,6 +17,7 @@ export default {
 	data() {
 		return {
 			text: '',
+			wh: 0,
 		};
 	},
 	computed: {
@@ -49,7 +50,7 @@ export default {
 			} else if (this.$route.params.part === 'players') {
 				t = c.players.map(p => p.displayName).join(', ');
 			} else if (this.$route.params.part === 'gamecat') {
-				t = c.gameInfo.releaseYear ? `${c.gameInfo.gameName} (${c.gameInfo.releaseYear}) </br> ${c.runInfo.category}` : `${c.gameInfo.gameName} </br> ${c.runInfo.category}`;
+				t = c.gameInfo.releaseYear ? `${c.gameInfo.gameName} (${c.gameInfo.releaseYear}) </br> ${c.runInfo.category}` : `${c.gameInfo.gameName} </br> <span style="font-size:${this.wh - 10}px">${c.runInfo.category}</span>`;
 			}
 
 			const i = t.indexOf(':');
@@ -77,6 +78,8 @@ export default {
 			maxFontSize: 80,
 			multiLine: true,
 		});
+
+		this.wh = parseInt(window.getComputedStyle(document.getElementsByClassName('textFitted')[0]).getPropertyValue('font-size'), 10);
 
 	// html {
 	//	background: none !important;
