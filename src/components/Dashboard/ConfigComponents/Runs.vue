@@ -292,6 +292,8 @@ export default {
 			this.isLoading = false;
 		},
 		saveEdit(run) {
+			// eslint-disable-next-line
+			run.gameInfo.releaseYear = parseInt(run.gameInfo.releaseYear, 10);
 			this.$http.patch(`run/update/${run.runID}`, run)
 				.then(() => {
 					this.$toast.open({
