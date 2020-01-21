@@ -67,7 +67,7 @@ export default {
 			if (t) {
 				return t;
 			}
-			return 'no valid part found. has to be one of "game", "category", "estimate", "platform" or "players"';
+			return '';
 		},
 	},
 	updated() {
