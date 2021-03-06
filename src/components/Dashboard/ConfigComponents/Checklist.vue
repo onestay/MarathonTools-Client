@@ -52,7 +52,7 @@ export default {
 					this.$refs.add.$el.children[0].focus();
 				})
 				.catch(() => {
-					this.$toast.open({
+					this.$buefy.toast.open({
 						message: 'Couldn\'t add checklist item',
 						position: 'is-bottom',
 						type: 'is-danger',
@@ -62,7 +62,7 @@ export default {
 		removeItem(item) {
 			this.$http.delete(`checklist/delete?item=${item}`)
 				.catch(() => {
-					this.$toast.open({
+					this.$buefy.toast.open({
 						message: 'Couldn\'t delete checklist item',
 						position: 'is-bottom',
 						type: 'is-danger',

@@ -93,7 +93,7 @@ export default {
 			if (service === 'twitch') {
 				this.$http.put('/social/twitch/update')
 					.then(() => {
-						this.$toast.open({
+						this.$buefy.toast.open({
 							type: 'is-success',
 							message: 'Updated Twitch info',
 							position: 'is-bottom',
@@ -101,7 +101,7 @@ export default {
 						});
 					})
 					.catch((e) => {
-						this.$toast.open({
+						this.$buefy.toast.open({
 							type: 'is-danger',
 							message: `Couldn't update twitch info. Error: ${e.response.data.error}`,
 							position: 'is-bottom',
@@ -111,7 +111,7 @@ export default {
 			} else if (service === 'twitter') {
 				this.$http.post('/social/twitter/update')
 					.then(() => {
-						this.$toast.open({
+						this.$buefy.toast.open({
 							type: 'is-success',
 							message: 'Sent tweet',
 							position: 'is-bottom',
@@ -119,7 +119,7 @@ export default {
 						});
 					})
 					.catch((e) => {
-						this.$toast.open({
+						this.$buefy.toast.open({
 							type: 'is-danger',
 							message: `Couldn't send tweet info. Error: ${e.response.data.error}`,
 							position: 'is-bottom',
@@ -142,7 +142,7 @@ export default {
 			this.$http.post('social/twitch/commercial', { length: this.adDuration })
 				.then((res) => {
 					if (res.ok) {
-						this.$toast.open({
+						this.$buefy.toast.open({
 							type: 'is-success',
 							message: 'Okay',
 							position: 'is-bottom',
@@ -151,7 +151,7 @@ export default {
 					}
 				})
 				.catch((e) => {
-					this.$toast.open({
+					this.$buefy.toast.open({
 						type: 'is-danger',
 						message: `Couldn't connect run commercial. Error: ${e.response.data.error}`,
 						position: 'is-bottom',

@@ -225,7 +225,7 @@ export default {
 			this.getTemplates();
 		},
 		createAlert(title, message) {
-			this.$dialog.alert({
+			this.this.$buefy.dialog.alert({
 				title,
 				message,
 			});
@@ -250,7 +250,7 @@ export default {
 				templateString: this.twitch.template,
 			})
 				.then(() => {
-					this.$toast.open({
+					this.$buefy.toast.open({
 						message: 'Settings saved',
 						position: 'is-bottom',
 						type: 'is-success',
@@ -263,7 +263,7 @@ export default {
 						});
 				})
 				.catch(() => {
-					this.$toast.open({
+					this.$buefy.toast.open({
 						message: 'Error saving settings',
 						position: 'is-bottom',
 						type: 'is-danger',
@@ -277,14 +277,14 @@ export default {
 		submitTwitterSettings(e) {
 			this.$http.put('social/twitter/settings', { sendTweets: e.target.checked })
 				.then(() => {
-					this.$toast.open({
+					this.$buefy.toast.open({
 						message: 'Settings saved',
 						position: 'is-bottom',
 						type: 'is-success',
 					});
 				})
 				.catch(() => {
-					this.$toast.open({
+					this.$buefy.toast.open({
 						message: 'Error saving settings',
 						position: 'is-bottom',
 						type: 'is-danger',
@@ -298,14 +298,14 @@ export default {
 					this.twitter.tweetTemplate.forMultiple = false;
 
 					this.twitter.templates = r.data;
-					this.$toast.open({
+					this.$buefy.toast.open({
 						message: 'Added template',
 						position: 'is-bottom',
 						type: 'is-success',
 					});
 				})
 				.catch(() => {
-					this.$toast.open({
+					this.$buefy.toast.open({
 						message: 'Error adding template',
 						position: 'is-bottom',
 						type: 'is-danger',
@@ -324,7 +324,7 @@ export default {
 					this.twitter.templates = r.data;
 				})
 				.catch(() => {
-					this.$toast.open({
+					this.$buefy.toast.open({
 						message: 'Error adding template',
 						position: 'is-bottom',
 						type: 'is-danger',

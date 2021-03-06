@@ -34,7 +34,7 @@ export default {
 			newSettings.socialCircleTime = parseInt(newSettings.socialCircleTime, 10);
 			this.$http.post('/settings', this.data.settings)
 				.then(() => {
-					this.$toast.open('Settings saved!');
+					this.$buefy.toast.open('Settings saved!');
 				});
 		},
 	},
