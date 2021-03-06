@@ -255,7 +255,7 @@ export default {
 			this.$http.post(`run/move/${runData.runID}/${this.moveRunEditID}`);
 		},
 		deleteRun() {
-			this.$dialog.confirm({
+			this.$buefy.dialog.confirm({
 				title: 'Deleting run',
 				message: 'Are you sure you want to delete this run? This action cannot be undone.',
 				confirmText: 'Delete run',
@@ -264,10 +264,10 @@ export default {
 				onConfirm: () => {
 					this.$http.delete(`run/delete/${this.selected.runData.runID}`)
 						.then(() => {
-							this.$toast.open('Run succesfully deleted!');
+							this.$buefy.toast.open('Run succesfully deleted!');
 						})
 						.catch(() => {
-							this.$toast.open({
+							this.$buefy.toast.open({
 								message: 'Request status not okay. Error:',
 								position: 'is-bottom',
 								type: 'is-danger',
@@ -296,14 +296,14 @@ export default {
 			run.gameInfo.releaseYear = parseInt(run.gameInfo.releaseYear, 10);
 			this.$http.patch(`run/update/${run.runID}`, run)
 				.then(() => {
-					this.$toast.open({
+					this.$buefy.toast.open({
 						message: 'Updated!',
 						position: 'is-bottom',
 						type: 'is-success',
 					});
 				})
 				.catch(() => {
-					this.$toast.open({
+					this.$buefy.toast.open({
 						message: 'Request status not okay. Error:',
 						position: 'is-bottom',
 						type: 'is-danger',
@@ -325,7 +325,7 @@ export default {
 			this.$http.post('run/add/single', this.addRun)
 				.then((res) => {
 					if (!res.data.ok) {
-						this.$toast.open({
+						this.$buefy.toast.open({
 							message: 'Request status not okay. Error:',
 							position: 'is-bottom',
 							type: 'is-danger',
@@ -335,7 +335,7 @@ export default {
 					if (this.addRun.after) {
 						this.$http.post(`run/move/${res.data.data}/${this.addRun.after}`);
 					}
-					this.$toast.open({
+					this.$buefy.toast.open({
 						message: 'Added run!',
 						position: 'is-bottom',
 						type: 'is-success',
