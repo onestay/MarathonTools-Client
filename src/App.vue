@@ -116,7 +116,7 @@ export default {
 					this.data.timer.ms = moment.duration(d.t, 'seconds').format('S');
 				} else if (d.dataType === 'error') {
 					if (!this.$route.includes('live')) {
-						this.$toast.open({
+						this.$buefy.toast.open({
 							duration: 5000,
 							message: d.error,
 							position: 'is-bottom',
@@ -139,7 +139,7 @@ export default {
 			this.ws.onopen = (() => {
 				this.$http.get('donations/total/update/start');
 				if (!window.location.href.includes('live')) {
-					this.$toast.open({
+					this.$buefy.toast.open({
 						type: 'is-light',
 						message: 'Websocket connection created.',
 						position: 'is-bottom',
@@ -149,7 +149,7 @@ export default {
 
 			this.ws.onerror = (() => {
 				if (!this.$route.includes('live')) {
-					this.$toast.open({
+					this.$buefy.toast.open({
 						type: 'is-danger',
 						message: 'Couldn\'t connect to Websocket or the connection was unexpectedly closed. Check if the backend is running. Reconnecting in 10 seconds',
 						position: 'is-bottom',

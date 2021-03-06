@@ -17,6 +17,15 @@
 				<b-icon icon="plus" />
 				<span>Add run</span>
 			</button>
+			<b-button
+				type="is-warning"
+				@click="uploadRunJson()">
+				Upload run JSON file
+			</b-button>
+			<input
+				type="file"
+				@change="jsonFileChange"
+			>
 		</b-field>
 		<b-table
 			:data="runData"
@@ -122,7 +131,9 @@
 					<p
 						v-if="addRun.players.length == 0"
 						class="has-text-centered has-text-weight-light is-italic"
-					>Click plus to add a player</p>
+					>
+						Click plus to add a player
+					</p>
 					<div
 						v-for="(player, i) in addRun.players"
 						:key="i">
@@ -159,7 +170,8 @@
 							<option
 								v-for="run in data.runs"
 								:value="run.runID"
-								:key="run.runID">
+								:key="run.runID"
+							>
 								{{ run.gameInfo.gameName }}
 							</option>
 						</b-select>
@@ -196,6 +208,7 @@ export default {
 	},
 	data() {
 		return {
+			runJSON: '',
 			isLoading: true,
 			moveRunEditID: '',
 			columns: [
@@ -251,6 +264,30 @@ export default {
 		this.updateTable();
 	},
 	methods: {
+		async jsonFileChange(f) {
+			this.data.runJSON = await f.target.files[0].text();
+			console.log(this.data.runJSON);
+		},
+		uploadRunJson() {
+			this.$buefy.dialog.confirm({
+				message: 'Uploading JSON Run File will replace all currently added runs',
+				onConfirm: () => {
+					this.$http.post('/run/upload', this.data.runJSON)
+						.then(() => {
+							this.updateTable();
+							this.$buefy.toast.open('Runs succesfully uploaded!');
+						})
+						.catch((e) => {
+							console.log(e);
+							this.$buefy.toast.open({
+								message: 'Couldn\'t upload runs',
+								position: 'is-bottom',
+								type: 'is-danger',
+							});
+						});
+				},
+			});
+		},
 		moveRun(runData) {
 			this.$http.post(`run/move/${runData.runID}/${this.moveRunEditID}`);
 		},
