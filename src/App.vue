@@ -72,7 +72,7 @@ export default {
 	},
 	methods: {
 		createWSConn() {
-			this.ws = new WebSocket(`ws://${window.location.hostname}:3000/ws`);
+			this.ws = new WebSocket('wss://mt.onestay.moe/ws');
 
 			this.ws.onmessage = ((event) => {
 				const d = JSON.parse(event.data);

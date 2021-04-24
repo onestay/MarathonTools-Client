@@ -266,7 +266,6 @@ export default {
 	methods: {
 		async jsonFileChange(f) {
 			this.data.runJSON = await f.target.files[0].text();
-			console.log(this.data.runJSON);
 		},
 		uploadRunJson() {
 			this.$buefy.dialog.confirm({
@@ -277,8 +276,7 @@ export default {
 							this.updateTable();
 							this.$buefy.toast.open('Runs succesfully uploaded!');
 						})
-						.catch((e) => {
-							console.log(e);
+						.catch(() => {
 							this.$buefy.toast.open({
 								message: 'Couldn\'t upload runs',
 								position: 'is-bottom',

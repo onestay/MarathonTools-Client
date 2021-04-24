@@ -5,7 +5,7 @@ import App from './App.vue';
 import router from './router';
 
 const axiosInstance = axios.create({
-	baseURL: `http://${window.location.hostname}:3000`,
+	baseURL: 'https://mt.onestay.moe/',
 });
 
 Vue.prototype.$http = axiosInstance;

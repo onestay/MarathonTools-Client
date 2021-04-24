@@ -32,7 +32,7 @@ export default {
 				useGrouping: true,
 				separator: '',
 				decimal: '.',
-				suffix: this.data.settings.currency,
+				prefix: this.data.settings.currency,
 			},
 		};
 	},
