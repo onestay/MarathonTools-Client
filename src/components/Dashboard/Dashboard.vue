@@ -1,14 +1,17 @@
 <template>
 	<div>
 		<section class="hero is-fullheight">
-			<div class="hero-head"><mt-header /></div>
+			<div class="hero-head">
+				<mt-header />
+			</div>
 			<div class="hero-body">
 				<div class="container">
 					<div class="tile is-ancestor">
 						<div class="tile is-vertical is-parent">
 							<div
 								:class="{'red-bg': !data.checklistDone}"
-								class="tile is-child box is-primary">
+								class="tile is-child box is-primary"
+							>
 								<mt-timer :data="data" />
 							</div>
 							<div class="tile is-child box">

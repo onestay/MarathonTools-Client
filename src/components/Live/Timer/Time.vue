@@ -2,7 +2,9 @@
 	<div
 		id="timer"
 		:state="data.timer.state"
-	>{{ output }}</div>
+	>
+		{{ output }}
+	</div>
 </template>
 
 <script>

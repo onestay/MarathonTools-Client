@@ -2,7 +2,8 @@
 	<div>
 		<b-field
 			grouped
-			group-multiline>
+			group-multiline
+		>
 			<button
 				:disabled="!selected"
 				class="button field is-danger"
@@ -13,13 +14,15 @@
 			</button>
 			<button
 				class="button field is-primary"
-				@click="modalActive = true">
+				@click="modalActive = true"
+			>
 				<b-icon icon="plus" />
 				<span>Add run</span>
 			</button>
 			<b-button
 				type="is-warning"
-				@click="uploadRunJson()">
+				@click="uploadRunJson()"
+			>
 				Upload run JSON file
 			</b-button>
 			<input
@@ -33,13 +36,15 @@
 			:striped="true"
 			:loading="isLoading"
 			:selected.sync="selected"
-			detailed>
+			detailed
+		>
 			<template
 				slot="detail"
-				slot-scope="props">
+				slot-scope="props"
+			>
 				<b-field grouped>
 					<b-field label="Game">
-						<b-input v-model="props.row.runData.gameInfo.gameName"/>
+						<b-input v-model="props.row.runData.gameInfo.gameName" />
 					</b-field>
 					<b-field label="Release year">
 						<b-input v-model="props.row.runData.gameInfo.releaseYear" />
@@ -59,7 +64,8 @@
 				<b-field
 					v-for="(player, i) in props.row.runData.players"
 					:key="player.displayName"
-					grouped>
+					grouped
+				>
 					<b-field :label="`Player ${i+1} Name`">
 						<b-input v-model="props.row.runData.players[i].displayName" />
 					</b-field>
@@ -72,13 +78,17 @@
 				</b-field>
 				<button
 					class="button is-success is-medium"
-					@click="saveEdit(props.row.runData)">Save edits</button>
+					@click="saveEdit(props.row.runData)"
+				>
+					Save edits
+				</button>
 				<b-field label="Move">
 					<b-select v-model="moveRunEditID">
 						<option
 							v-for="run in data.runs"
+							:key="run.runID"
 							:value="run.runID"
-							:key="run.runID">
+						>
 							{{ run.gameInfo.gameName }}
 						</option>
 					</b-select>
@@ -86,22 +96,28 @@
 				<button
 					class="button is-success is-medium"
 					@click="moveRun(props.row.runData)"
-				>Move run</button>
+				>
+					Move run
+				</button>
 			</template>
 		</b-table>
 		<b-modal
 			:active.sync="modalActive"
-			@close="closeModal">
+			@close="closeModal"
+		>
 			<div
 				class="modal-card"
-				style="width: auto">
+				style="width: auto"
+			>
 				<header class="modal-card-head">
-					<p class="modal-card-title">Add run</p>
+					<p class="modal-card-title">
+						Add run
+					</p>
 				</header>
 				<section class="modal-card-body">
 					<b-field grouped>
 						<b-field label="Game">
-							<b-input v-model="addRun.gameInfo.gameName"/>
+							<b-input v-model="addRun.gameInfo.gameName" />
 						</b-field>
 						<b-field label="Release year">
 							<b-input v-model="addRun.gameInfo.releaseYear" />
@@ -122,10 +138,12 @@
 					<div style="display: flex; justify-content: center">
 						<button
 							class="button is-medium"
-							@click="addPlayer">
+							@click="addPlayer"
+						>
 							<b-icon
 								icon="plus"
-								size="is-large"/>
+								size="is-large"
+							/>
 						</button>
 					</div>
 					<p
@@ -136,17 +154,20 @@
 					</p>
 					<div
 						v-for="(player, i) in addRun.players"
-						:key="i">
-						<h5 class="is-size-5">Player {{ i + 1 }}</h5>
+						:key="i"
+					>
+						<h5 class="is-size-5">
+							Player {{ i + 1 }}
+						</h5>
 						<b-field grouped>
 							<b-field label="Displayname">
 								<b-input v-model="player.displayName" />
 							</b-field>
 							<b-field label="Twitter handle">
-								<b-input v-model="player.twitterName"/>
+								<b-input v-model="player.twitterName" />
 							</b-field>
 							<b-field label="Twitch name">
-								<b-input v-model="player.twitchName"/>
+								<b-input v-model="player.twitchName" />
 							</b-field>
 						</b-field>
 					</div>
@@ -156,21 +177,24 @@
 					>
 						<button
 							class="button is-medium"
-							@click="addRun.players.splice(-1, 1)">
+							@click="addRun.players.splice(-1, 1)"
+						>
 							<b-icon
 								icon="minus"
-								size="is-large"/>
+								size="is-large"
+							/>
 						</button>
 					</div>
 					<hr>
 					<b-field label="Insert before">
 						<b-select
 							v-model="addRun.after"
-							placeholder="at end">
+							placeholder="at end"
+						>
 							<option
 								v-for="run in data.runs"
-								:value="run.runID"
 								:key="run.runID"
+								:value="run.runID"
 							>
 								{{ run.gameInfo.gameName }}
 							</option>
@@ -180,13 +204,15 @@
 				<footer class="modal-card-foot">
 					<button
 						class="button is-danger"
-						@click="closeModal">
-						<b-icon icon="close"/>
+						@click="closeModal"
+					>
+						<b-icon icon="close" />
 						<span>Close without saving</span>
 					</button>
 					<button
 						class="button is-success"
-						@click="saveRun">
+						@click="saveRun"
+					>
 						<b-icon icon="content-save" />
 						<span>Save run</span>
 					</button>

@@ -2,7 +2,9 @@
 	<div class="tile is-ancestor">
 		<div class="tile is-parent">
 			<div class="tile is-child box">
-				<p class="title">Twitch</p>
+				<p class="title">
+					Twitch
+				</p>
 				<a
 					:disabled="twitch.isConnected"
 					:href="twitch.oauthUrl"
@@ -12,34 +14,48 @@
 				<button
 					v-if="twitch.isConnected"
 					class="button is-danger"
-					@click="deleteTwitchInfo">Delete Twitch Info</button>
+					@click="deleteTwitchInfo"
+				>
+					Delete Twitch Info
+				</button>
 				<hr>
 				<div class="field">
 					<b-switch
 						v-model="twitch.updateTitle"
-						:disabled="twitch.isConnected === false">Update Title</b-switch>
+						:disabled="twitch.isConnected === false"
+					>
+						Update Title
+					</b-switch>
 				</div>
 				<div class="field">
 					<b-switch
 						v-model="twitch.updateGame"
-						:disabled="twitch.isConnected === false">Update Game</b-switch>
+						:disabled="twitch.isConnected === false"
+					>
+						Update Game
+					</b-switch>
 				</div>
 				<div class="field">
 					<b-switch
 						v-model="twitch.viewersInDashboard"
-						:disabled="twitch.isConnected === false">Show viewers in Dashboard</b-switch>
+						:disabled="twitch.isConnected === false"
+					>
+						Show viewers in Dashboard
+					</b-switch>
 				</div>
 				<b-field label="Title Template">
 					<b-input
 						v-model="twitch.template"
-						type="textarea" />
+						type="textarea"
+					/>
 				</b-field>
 				<div>
 					<div class="has-text-grey is-size-7">
 						Title Template follows the Go text/template package.
 						The Documentation can be found <a
 							href="https://golang.org/pkg/text/template/#hdr-Actions"
-							target="blank">here</a>.
+							target="blank"
+						>here</a>.
 						The available pipelines are <code>Game</code>, <code>Runner</code>, <code>Platform</code>, <code>Estimate</code> and <code>Category</code>.
 						For more info see the <code>twitchTitleOptions</code> type and the <code>run</code> type.
 					</div>
@@ -52,10 +68,15 @@
 				<hr>
 				<button
 					class="button is-primary"
-					@click="submitTwitchSettings">Submit Twitch settings</button>
+					@click="submitTwitchSettings"
+				>
+					Submit Twitch settings
+				</button>
 			</div>
 			<div class="tile is-child box">
-				<p class="title">Twitter</p>
+				<p class="title">
+					Twitter
+				</p>
 				{{ twitter.oauthurl }}
 				<a
 					:disabled="twitter.isConnected"
@@ -66,13 +87,19 @@
 				<button
 					v-if="twitter.isConnected"
 					class="button is-danger"
-					@click="deleteTwitterInfo">Delete Twitter Info</button>
+					@click="deleteTwitterInfo"
+				>
+					Delete Twitter Info
+				</button>
 				<hr>
 				<b-field>
 					<b-switch
 						v-model="twitter.sendTweets"
 						:disabled="!twitter.isConnected"
-						@change.native="submitTwitterSettings">Send tweets on run changes</b-switch>
+						@change.native="submitTwitterSettings"
+					>
+						Send tweets on run changes
+					</b-switch>
 				</b-field>
 				<b-field label="Tweet Template">
 					<b-input
@@ -82,16 +109,22 @@
 					/>
 				</b-field>
 				<b-field>
-					<b-checkbox v-model="twitter.tweetTemplate.forMultiple">For multiple runners</b-checkbox>
+					<b-checkbox v-model="twitter.tweetTemplate.forMultiple">
+						For multiple runners
+					</b-checkbox>
 				</b-field>
 				<button
 					class="button is-primary"
-					@click="submitTemplate">Add template</button>
+					@click="submitTemplate"
+				>
+					Add template
+				</button>
 				<div class="has-text-grey is-size-7">
 					Tweet Template follows the Go text/template package.
 					The Documentation can be found <a
 						href="https://golang.org/pkg/text/template/#hdr-Actions"
-						target="blank">here</a>.
+						target="blank"
+					>here</a>.
 					The available pipelines are <code>Game</code>, <code>Runner</code>, <code>Platform</code>, <code>Estimate</code> and <code>Category</code>.
 					For more info see the <code>twitchTitleOptions</code> type and the <code>run</code> type. <br> A tweet can only be 240 characters long.
 					Templates can't be too long or they would go over the maxium allowed limit. If the tweet for the next run is too long it will be shown in the dashboard. <br>
@@ -115,14 +148,18 @@
 							<br>
 							<button
 								class="button is-danger is-small"
-								@click="deleteTemplate(i)">
+								@click="deleteTemplate(i)"
+							>
 								<b-icon
 									icon="close"
-									size="is-small"/>
+									size="is-small"
+								/>
 							</button>
 						</div>
 					</div>
-					<div v-if="twitter.templates.length === 0"><i>No templates added</i></div>
+					<div v-if="twitter.templates.length === 0">
+						<i>No templates added</i>
+					</div>
 				</b-collapse>
 			</div>
 		</div>

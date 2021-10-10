@@ -12,17 +12,22 @@
 			<p class="controll">
 				<button
 					class="button is-primary"
-					@click="addItem">Add</button>
+					@click="addItem"
+				>
+					Add
+				</button>
 			</p>
 		</b-field>
 		<div class="key-list">
 			<div
-				v-for="(item) in data.checklistItems"
-				:key="item.key">
+				v-for="(clItem) in data.checklistItems"
+				:key="clItem.key"
+			>
 				<a
 					class="delete"
-					@click="removeItem(item.key)"/>
-				{{ item.key }}
+					@click="removeItem(clItem.key)"
+				/>
+				{{ clItem.key }}
 			</div>
 		</div>
 	</div>

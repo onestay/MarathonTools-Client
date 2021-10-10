@@ -1,7 +1,9 @@
 <template>
+	<!-- eslint-disable vue/no-v-html -->
 	<div
 		id="player"
-		v-html="output" />
+		v-html="output"
+	/>
 </template>
 
 <script>

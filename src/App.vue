@@ -7,7 +7,8 @@
 		/>
 		<router-view
 			v-else
-			:data="data" />
+			:data="data"
+		/>
 	</div>
 </template>
 
@@ -72,7 +73,7 @@ export default {
 	},
 	methods: {
 		createWSConn() {
-			this.ws = new WebSocket('wss://mt.onestay.moe/ws');
+			this.ws = new WebSocket('ws://127.0.0.1:3000/ws');
 
 			this.ws.onmessage = ((event) => {
 				const d = JSON.parse(event.data);

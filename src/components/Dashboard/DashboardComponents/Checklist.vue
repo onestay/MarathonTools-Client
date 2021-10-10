@@ -4,20 +4,21 @@
 			<div
 				slot="trigger"
 				slot-scope="props"
-				class="card-header">
+				class="card-header"
+			>
 				<p class="card-header-title">
 					Checklist
 				</p>
 				<a class="class-header-icon">
-					<b-icon :icon="props.open ? 'menu-down' : 'menu-up'"/>
+					<b-icon :icon="props.open ? 'menu-down' : 'menu-up'" />
 				</a>
 			</div>
 			<div class="card-content">
 				<div class="content">
 					<div
 						v-for="(item) in data.checklistItems"
-						:key="item.key">
-
+						:key="item.key"
+					>
 						<label class="checkbox">
 							<input
 								:checked="item.done"

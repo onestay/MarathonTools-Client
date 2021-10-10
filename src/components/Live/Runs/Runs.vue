@@ -1,5 +1,7 @@
 <template>
-	<div id="runs">{{ output }}</div>
+	<div id="runs">
+		{{ output }}
+	</div>
 </template>
 
 <script>

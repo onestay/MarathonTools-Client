@@ -1,15 +1,26 @@
 <template>
 	<div>
 		<div v-if="isLoading">
-			<h3 class="is-size-3">Fetching data...</h3>
+			<h3 class="is-size-3">
+				Fetching data...
+			</h3>
 		</div>
 		<div v-else>
-			<h3 class="is-size-3">Status</h3>
-			<h4 class="is-size-4">Layout</h4>
+			<h3 class="is-size-3">
+				Status
+			</h3>
+			<h4 class="is-size-4">
+				Layout
+			</h4>
 			<button
 				class="button is-primary"
-				@click="refreshLayout">Refresh Layout</button>
-			<h4 class="is-size-4">Social</h4>
+				@click="refreshLayout"
+			>
+				Refresh Layout
+			</button>
+			<h4 class="is-size-4">
+				Social
+			</h4>
 			<div v-if="twitchIsConnected">
 				<span>Twitch is connected</span>
 				<br>
@@ -18,28 +29,49 @@
 				<div>Social Updates</div>
 				<button
 					class="button is-primary"
-					@click="updateSocial('twitch')">Update Twitch info</button>
+					@click="updateSocial('twitch')"
+				>
+					Update Twitch info
+				</button>
 				<button
 					style="margin-left: 10px;"
 					class="button is-primary"
-					@click="updateSocial('twitter')">Send tweet</button>
+					@click="updateSocial('twitter')"
+				>
+					Send tweet
+				</button>
 				<hr>
 				<div>Twitch Ads</div>
 				<b-field grouped>
 					<b-field label="Ad duration">
 						<b-select v-model="adDuration">
-							<option :value="30">30s</option>
-							<option :value="60">60s</option>
-							<option :value="90">90s</option>
-							<option :value="120">120s</option>
-							<option :value="150">150s</option>
-							<option :value="180">180s</option>
+							<option :value="30">
+								30s
+							</option>
+							<option :value="60">
+								60s
+							</option>
+							<option :value="90">
+								90s
+							</option>
+							<option :value="120">
+								120s
+							</option>
+							<option :value="150">
+								150s
+							</option>
+							<option :value="180">
+								180s
+							</option>
 						</b-select>
 					</b-field>
 					<b-field label="Run ad">
 						<button
 							class="button is-danger"
-							@click="runAd">Run ad</button>
+							@click="runAd"
+						>
+							Run ad
+						</button>
 					</b-field>
 				</b-field>
 			</div>
@@ -47,7 +79,9 @@
 				<span>Twitch isn't conntected.</span>
 			</div>
 			<div>
-				<h4 class="is-size-4">Donations</h4>
+				<h4 class="is-size-4">
+					Donations
+				</h4>
 				<span>{{ donations }}</span>
 			</div>
 		</div>

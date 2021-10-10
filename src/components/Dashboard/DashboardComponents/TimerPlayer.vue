@@ -4,19 +4,21 @@
 			<span class="tag is-primary is-large">{{ player.displayName }}</span>
 			<span
 				v-if="!player.timer.finished"
-				class="tag is-success is-large">
+				class="tag is-success is-large"
+			>
 				<button
 					:disabled="timerState !== 0"
 					class="button is-success is-marginless is-paddingless"
 					@click="timerPlayerDone()"
 				>
-					<b-icon icon="check"/>
+					<b-icon icon="check" />
 					<span>Done</span>
 				</button>
 			</span>
 			<span
 				v-else
-				class="tag is-success is-large">{{ parsePlayerTime }}</span>
+				class="tag is-success is-large"
+			>{{ parsePlayerTime }}</span>
 		</div>
 	</div>
 </template>

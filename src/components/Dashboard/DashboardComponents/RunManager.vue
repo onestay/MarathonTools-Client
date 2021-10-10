@@ -11,7 +11,7 @@
 						<span>{{ data.currentRun.gameInfo.releaseYear ? `${data.currentRun.gameInfo.gameName} (${data.currentRun.gameInfo.releaseYear})` : data.currentRun.gameInfo.gameName }}</span>
 					</li>
 					<li>
-						<b-icon icon="tag"/>
+						<b-icon icon="tag" />
 						<span>{{ data.currentRun.runInfo.category }}</span>
 					</li>
 					<li>
@@ -33,21 +33,24 @@
 				<div
 					v-for="player in data.currentRun.players"
 					:key="player.displayName"
-					class="inline">
+					class="inline"
+				>
 					<div class="dropdown is-hoverable">
 						<div class="dropdown-trigger">
 							<button
 								class="button"
 								aria-haspopup="true"
-								aria-controls="dropdown-menu4">
+								aria-controls="dropdown-menu4"
+							>
 								<span>{{ player.displayName }}</span>
-								<b-icon icon="chevron-down"/>
+								<b-icon icon="chevron-down" />
 							</button>
 						</div>
 						<div
 							id="dropdown-menu4"
 							class="dropdown-menu"
-							role="menu">
+							role="menu"
+						>
 							<div class="dropdown-content">
 								<div class="dropdown-item">
 									<span>Twitch: {{ player.twitchName }}</span>
@@ -72,14 +75,16 @@
 			<a
 				:disabled="data.prevRun.runID === '' || data.timer.state !== 2"
 				class="button card-footer-item"
-				@click="switchRuns('prev')">
+				@click="switchRuns('prev')"
+			>
 				<b-icon icon="chevron-left" />
 				<span>Previous ({{ data.prevRun.gameInfo.gameName }})</span>
 			</a>
 			<a
 				:disabled="data.nextRun.runID === '' || data.timer.state !== 2"
 				class="button card-footer-item"
-				@click="switchRuns('next')">
+				@click="switchRuns('next')"
+			>
 				<b-icon icon="chevron-right" />
 				<span>Next ({{ data.nextRun.gameInfo.gameName }})</span>
 			</a>
