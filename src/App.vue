@@ -116,7 +116,8 @@ export default {
 					}
 					this.data.timer.ms = moment.duration(d.t, 'seconds').format('S');
 				} else if (d.dataType === 'error') {
-					if (!this.$route.includes('live')) {
+					if (!this.$route.path.includes('live')) {
+						console.error(d.error);
 						this.$buefy.toast.open({
 							duration: 5000,
 							message: d.error,

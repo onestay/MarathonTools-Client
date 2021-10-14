@@ -21,26 +21,10 @@
 				<hr>
 				<div class="field">
 					<b-switch
-						v-model="twitch.updateTitle"
+						v-model="twitch.update"
 						:disabled="twitch.isConnected === false"
 					>
-						Update Title
-					</b-switch>
-				</div>
-				<div class="field">
-					<b-switch
-						v-model="twitch.updateGame"
-						:disabled="twitch.isConnected === false"
-					>
-						Update Game
-					</b-switch>
-				</div>
-				<div class="field">
-					<b-switch
-						v-model="twitch.viewersInDashboard"
-						:disabled="twitch.isConnected === false"
-					>
-						Show viewers in Dashboard
+						Update title & game
 					</b-switch>
 				</div>
 				<b-field label="Title Template">
@@ -172,9 +156,7 @@ export default {
 		return {
 			twitch: {
 				isConnected: false,
-				updateGame: false,
-				updateTitle: false,
-				viewersInDashboard: false,
+				update: false,
 				oauthUrl: '',
 				template: 'Loading...',
 				title: 'Loading...',
@@ -195,56 +177,12 @@ export default {
 	created() {
 		this.fetchData();
 		this.verifyConnections();
-		const pathArray = this.$route.path.split('/');
-		const lastPart = pathArray[pathArray.length - 1];
-
-
-		if (lastPart === 'twitch') {
-			if (this.$route.query.code) {
-				this.$http.post(`social/twitch/auth?code=${this.$route.query.code}`)
-					.then(() => {
-						this.verifyConnections();
-						this.$router.push('/dashboard/config/social');
-					})
-					.catch(() => {
-						this.createAlert('Error', 'Couldn\'t connect with Twitch');
-					});
-			} else if (this.$route.query.error) {
-				this.debug = this.$route.query.error_description;
-				this.createAlert(this.$route.query.error, this.$route.query.error_description);
-			}
-			return;
-		}
-		if (lastPart === 'twitter') {
-			if (this.$route.query.oauth_token) {
-				this.$http.post(`social/twitter/auth?oauth_token=${this.$route.query.oauth_token}&oauth_verifier=${this.$route.query.oauth_verifier}`)
-					.then(() => {
-						this.verifyConnections();
-						this.$router.push('/dashboard/config/social');
-					})
-					.catch(() => {
-						this.createAlert('Error', 'Couldn\'t connect with Twitter');
-					});
-			} else if (this.$route.query.denied) {
-				this.createAlert('Error', 'Couldn\'t connect with Twitter');
-			}
-		}
 	},
 	methods: {
 		fetchData() {
-			this.$http.get('social/twitch/oauthurl')
-				.then((res) => {
-					this.twitch.oauthUrl = res.data.data;
-				});
-			this.$http.get('social/twitter/oauthurl')
-				.then((res) => {
-					this.twitter.oauthUrl = res.data.data;
-				});
 			this.$http.get('social/twitch/settings')
 				.then((res) => {
-					this.twitch.updateGame = res.data.gameUpdate;
-					this.twitch.updateTitle = res.data.titleUpdate;
-					this.twitch.viewersInDashboard = res.data.viewers;
+					this.twitch.update = res.data.update;
 					this.twitch.template = res.data.templateString;
 				});
 			this.$http.get('social/twitch/executetemplate')
@@ -269,11 +207,24 @@ export default {
 		},
 		verifyConnections() {
 			this.$http.get('social/twitch/verify')
-				// eslint-disable-next-line
-				.then(res => this.twitch.isConnected = res.data.data === 'true');
+				.then((res) => {
+					if (res.data.data === 'true') {
+						this.twitch.isConnected = true;
+						this.twitch.oauthUrl = 'a';
+					} else {
+						this.twitch.oauthUrl = res.data.data;
+					}
+				});
 			this.$http.get('social/twitter/verify')
 				// eslint-disable-next-line
-				.then(res => this.twitter.isConnected = res.data.data === 'true');
+				.then((res) => {
+					if (res.data.data === 'true') {
+						this.twitter.isConnected = true;
+						this.twitter.oauthUrl = 'a';
+					} else {
+						this.twitter.oauthUrl = res.data.data;
+					}
+				});
 		},
 		deleteTwitchInfo() {
 			this.$http.delete('social/twitch/token')
@@ -281,9 +232,7 @@ export default {
 		},
 		submitTwitchSettings() {
 			this.$http.put('social/twitch/settings', {
-				titleUpdate: this.twitch.updateTitle,
-				gameUpdate: this.twitch.updateGame,
-				viewers: this.twitch.viewersInDashboard,
+				update: this.twitch.update,
 				templateString: this.twitch.template,
 			})
 				.then(() => {
