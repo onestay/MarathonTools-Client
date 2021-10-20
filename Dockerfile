@@ -1,10 +1,12 @@
-FROM node:15
-COPY ./ /app
+FROM node:latest as build-stage
 WORKDIR /app
-RUN yarn && yarn run build
+COPY package*.json ./
+RUN npm install
+COPY ./ .
+RUN npm run build
 
-FROM nginx
+FROM nginx:alpine as production-stage
 RUN mkdir /app
-COPY --from=0 /app/dist /app
+COPY --from=build-stage /app/dist /app
 COPY .htpasswd /.htpasswd
 COPY nginx.conf /etc/nginx/nginx.conf

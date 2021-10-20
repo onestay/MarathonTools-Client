@@ -73,7 +73,8 @@ export default {
 	},
 	methods: {
 		createWSConn() {
-			this.ws = new WebSocket('ws://127.0.0.1:3000/ws');
+			const wsURL = process.env.VUE_APP_NODE_ENV === 'production' ? process.env.VUE_APP_WS_URL : 'ws://localhost:3000/ws';
+			this.ws = new WebSocket(wsURL);
 
 			this.ws.onmessage = ((event) => {
 				const d = JSON.parse(event.data);

@@ -4,8 +4,9 @@ import '@mdi/font/css/materialdesignicons.min.css';
 import App from './App.vue';
 import router from './router';
 
+const baseURL = process.env.VUE_APP_NODE_ENV === 'production' ? process.env.VUE_APP_API_URL : 'http://localhost:3000';
 const axiosInstance = axios.create({
-	baseURL: 'http://127.0.0.1:3000',
+	baseURL,
 });
 
 Vue.prototype.$http = axiosInstance;
